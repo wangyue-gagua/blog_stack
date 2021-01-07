@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>web on A Technical Blog</title>
+    <link>https://www.gagua.xyz/categories/web/</link>
+    <description>Recent content in web on A Technical Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 06 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/categories/web/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Establish A Website With R Blogdown</title>
+      <link>https://www.gagua.xyz/p/establish-a-website-by-r-blogdown/</link>
+      <pubDate>Wed, 06 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.gagua.xyz/p/establish-a-website-by-r-blogdown/</guid>
+      <description>缘起Blogdown是由Yihui Xie基于Hugo编写的一个R包，用于便捷地进行静态网站的构建。由于Yihui大神和RStudio团队的不懈努力，一个充满活力的R语言社区得以构建。加上之前偶然尝试了Yihui的另一个R包Rmarkdown，不由惊为天人。恰巧最近也学了点web相关的知识，html,css,native js等等，于是就产生了构建一个博客的想法，顺便也能记录一些在探索中遇到的技术问题，分享数据可视化的一些美图，实践《计算机网络，自顶而下方法》，《深入理解计算机系统》。
+选型Blogdown下载直接install.packages()，在比较新版本的RStudio IDE中，New Project中可以直接选择website using blogdown，RStudio会自动下载新版本的Hugo，在此也能选择主题(theme github)。在Hugo官网中纠结了很久，最后还是选了Stack作为我博客的主题，说实话第一眼还是配图吸引了我，果然人就是肤浅的视觉动物。分类、搜索、评论、无框架，在满足了我基本的需求之后，还能提供相对充裕的自定制空间。毕竟框架虽然强大，但却封装了技术细节，想弄懂又需要花费不少学习成本，好吧，懒癌晚期，if it works, don’t fix it?
+blogdown在这想稍微详细说一下blogdown。众所周知，hugo是一款以Go开发的强大的静态网站生成器，那为什么还要开发blogdown呢？很简单，因为hugo暂时还没有完成对.Rmd的支持，但rmarkdown直接在网页中同时包含代码和生成的结果实在是太香了（其实还有更多的功能，但我就是个视觉动物）。Yihui因此开发了blogdown（有技术真的可以为所欲为吗），实现了对.Rmd的解析渲染，并且能实现bookdown、rmarkdown的绝大部分特性（yihui怎么又是你，难道这就是推荐式算法吗，信息茧房恐怖如斯），加上Shiny应该可以实现交互式的页面应用，很可惜我暂时还不懂shiny咋用。这里又要吹一波RSstudio了，Addins提供了包括新增post和插入image等操作的快捷方式。（啊，为什么本地加载图片会失败啊）。总之，blogdown:::serve_site()建立本地服务器用于预览，blogdown::build_site()后能得到一个默认为public的文件夹，里面就包含了博客所需要的所有文件。接下来就是github新建仓库，git commit, push remote一气呵成，很快啊。注意要在public文件夹建立仓库，因为建站所需的文件只有这些。
+</description>
+    </item>
+    
+  </channel>
+</rss>

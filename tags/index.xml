@@ -6,7 +6,25 @@
     <description>Recent content in Tags on A Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 06 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>blogdown</title>
+      <link>https://www.gagua.xyz/tags/blogdown/</link>
+      <pubDate>Wed, 06 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.gagua.xyz/tags/blogdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hugo</title>
+      <link>https://www.gagua.xyz/tags/hugo/</link>
+      <pubDate>Wed, 06 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.gagua.xyz/tags/hugo/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>plot</title>
       <link>https://www.gagua.xyz/tags/plot/</link>
