@@ -232,7 +232,13 @@
 </div>
 <div id="blogdown" class="section level1">
 <h1>blogdown</h1>
-<p>在这想稍微详细说一下blogdown。众所周知，hugo是一款以Go开发的强大的静态网站生成器，那为什么还要开发blogdown呢？很简单，因为hugo暂时还没有完成对.Rmd的支持，但rmarkdown直接在网页中同时包含代码和生成的结果实在是太香了（其实还有更多的功能，但我就是个视觉动物）。Yihui因此开发了blogdown（有技术真的可以为所欲为吗），实现了对.Rmd的解析渲染，并且能实现bookdown、rmarkdown的绝大部分特性（yihui怎么又是你，难道这就是推荐式算法吗，信息茧房恐怖如斯），加上<a href="https://shiny.rstudio.com/">Shiny</a>应该可以实现交互式的页面应用，很可惜我暂时还不懂shiny咋用。这里又要吹一波RSstudio了，Addins提供了包括新增post和插入image等操作的快捷方式。<img src="/2021-01-06-establish-a-website-by-r-blogdown/index.en_files/addins.png" alt="blogdown addins" />（啊，为什么本地加载图片会失败啊）。总之，<code>blogdown:::serve_site()</code>建立本地服务器用于预览，<code>blogdown::build_site()</code>后能得到一个默认为<strong>public</strong>的文件夹，里面就包含了博客所需要的所有文件。接下来就是github新建仓库，git commit, push remote一气呵成，很快啊。注意要在public文件夹建立仓库，因为建站所需的文件只有这些。</p>
+<p>在这想稍微详细说一下blogdown。众所周知，hugo是一款以Go开发的强大的静态网站生成器，那为什么还要开发blogdown呢？很简单，因为hugo暂时还没有完成对.Rmd的支持，但rmarkdown直接在网页中同时包含代码和生成的结果实在是太香了（其实还有更多的功能，但我就是个视觉动物）。Yihui因此开发了blogdown（有技术真的可以为所欲为吗），实现了对.Rmd的解析渲染，并且能实现bookdown、rmarkdown的绝大部分特性（yihui怎么又是你，难道这就是推荐式算法吗，信息茧房恐怖如斯），加上<a href="https://shiny.rstudio.com/">Shiny</a>应该可以实现交互式的页面应用，很可惜我暂时还不懂shiny咋用。这里又要吹一波RSstudio了，Addins提供了包括新增post和插入image等操作的快捷方式。</p>
+<div class="figure">
+<img src="/post/2021-01-06-establish-a-website-by-r-blogdown/index.en_files/addins.png" style="width:50.0%" alt="" />
+<p class="caption">blogdown addins</p>
+</div>
+<p>（啊，为什么本地加载图片会失败啊，哦，原来是生成路径的问题，rmd要加入/post/）</p>
+<p>总之，<code>blogdown:::serve_site()</code>建立本地服务器用于预览，<code>blogdown::build_site()</code>后能得到一个默认为<strong>public</strong>的文件夹，里面就包含了博客所需要的所有文件。接下来就是github新建仓库，git commit, push remote一气呵成，很快啊。注意要在public文件夹建立仓库，因为建站所需的文件只有这些。</p>
 </div>
 
 </section>
