@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Deploy to my personal vps using nginx web server and set webhook'><title>Deploy A Static Blog Site</title>
+
+<link rel='canonical' href='https://www.gagua.xyz/p/deploy-a-static-blog-site/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Deploy A Static Blog Site'>
+<meta property='og:description' content='Deploy to my personal vps using nginx web server and set webhook'>
+<meta property='og:url' content='https://www.gagua.xyz/p/deploy-a-static-blog-site/'>
+<meta property='og:site_name' content='A Technical Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='nginx' /><meta property='article:tag' content='nodejs' /><meta property='article:published_time' content='2021-01-07T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-01-07T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Deploy A Static Blog Site">
+<meta name="twitter:description" content="Deploy to my personal vps using nginx web server and set webhook">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+    </head>
+    <body class="">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.body.dataset.scheme = 'dark';
+        } else {
+            document.body.dataset.scheme = 'light';
+        }
+    })();
+</script><div class="container main-container flex on-phone--column extended article-page with-toolbar">
+            <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header class="site-info">
+        
+            <figure class="site-avatar">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu677977ea8fe1bf1a7b4f18cdbbe66107_44020_300x0_resize_box_2.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+        
+        <h1 class="site-name"><a href="https://www.gagua.xyz">A Technical Blog</a></h1>
+        <h2 class="site-description">log something fantastic, data science , web front end and so on.</h2>
+    </header>
+
+    <ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        
+            <li id="dark-mode-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <span>Dark Mode</span>
+            </li>
+        
+    </ol>
+</aside>
+
+            <main class="main full-width">
+    <div id="article-toolbar">
+        <a href="https://www.gagua.xyz" class="back-home">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+            <span>Back</span>
+        </a>
+    </div>
+
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/web/" >
+                web
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/deploy-a-static-blog-site/">Deploy A Static Blog Site</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        Deploy to my personal vps using nginx web server and set webhook
+    </h3>
+    <footer class="article-time">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <time class="article-time--published">Jan 07, 2021</time>
+    </footer></div>
+</header>
+
+    <section class="article-content">
+    
+
+
+<div id="deployment" class="section level1">
+<h1>Deployment</h1>
+<p>网站如果只运行在local host那还叫啥网站啊，如果部署在一个具有公网ip的服务器，这样就能实现让几乎所有人都能通过浏览器访问自己的网站。<a href="https://bookdown.org/yihui/blogdown/deployment.html">blogdown</a>文档中提供了多种部署方案，但在这里选择部署至一台自己的vps上。</p>
+<div id="此时需要" class="section level2">
+<h2>此时需要:</h2>
+<ul>
+<li>能通过互联网访问的主机（host）一台</li>
+<li>网站（博客）的文件</li>
+<li>client——浏览器</li>
+<li>server——webServer</li>
+</ul>
+<p>云计算，大数据如此火热的现在，主机现在显然不是问题。博客文件已经通过blogdown生成，浏览器也成为了大部分人的应用，接下来就只剩下webServer的问题了。</p>
+</div>
+</div>
+<div id="webserver" class="section level1">
+<h1>WebServer</h1>
+<p>WebServer可以解析<abbr title="hyper text transfer protocol">HTTP</abbr>，响应(response)一个请求(request)，通常都是返回一个html文件来让浏览器进行浏览。在这里我选用的是<a href="http://nginx.org/en/">nginx</a>，一款主要由Igor Sysoev在<em>业余时间</em>开发的HTTP和反向代理的服务器。当然还有其他功能，不过我暂时用上的就只有这两个。webserver当然由很多，如Apache等，甚至可以用python等自己实现一个，但是为什么我会选择nginx？主要是因为nginx内存占用小，并发高（这一点对于我暂时没有什么用处），有着优秀的静态处理性能（关键）。这对于私人博客这样一个静态网站来说，是完美的选择。</p>
+<div id="install-nginx" class="section level2">
+<h2>install nginx</h2>
+<p><a href="http://nginx.org/en/">nginx</a>可以通过源码安装，但是在linux上想到的，果然还是yum优先。抱歉，由权限是真的可以为所欲为。</p>
+<pre class="shell"><code>yum install nginx
+......
+no package nginx available</code></pre>
+<p>？居然显示仓库中没有nginx，怎么可能？很好，我选择万能的conda。
+安装好miniconda之后，<code>conda search nginx</code>，果然有，完成下载。在浏览器访问主机的ip地址，出现以下的界面：</p>
+<div class="figure">
+<img src="/post/2021-01-07-deploy-a-static-blog-site/index.en_files/b92e58d99fd61d99cac151a5a241feb1.jpg" style="width:80.0%" alt="" />
+<p class="caption">nginx 安装成功</p>
+</div>
+<p>注意，conda 安装的nginx将根目录设置的是conda所在目录。</p>
+<pre class="shell"><code>git clone xxx.git</code></pre>
+<p>从远程仓库git clone得到静态网页项目文件，之后的就是设置nginx的配置文件了。
+<code>nginx -t</code>直接找到配置文件位置</p>
+<pre class="shell"><code># nginx -t
+nginx: the configuration file $path/to/conf/file syntax is ok
+nginx: configuration file $path/to/conf/file test is successful
+vi $path/to/conf/file
+.
+.
+.
+include sites.d/*.conf;</code></pre>
+<p>nginx将<code>sites.d/*.conf</code>中的所有文件包含在了配置文件中。在<code>sites.d/</code>下新建一个<code>.conf</code>文件，</p>
+<pre class="shell"><code>server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }</code></pre>
+<p>假设网页文件夹的绝对路径为$abl，主机ip为$ip修改</p>
+<pre class="shell"><code>server {
+        listen       80;
+        server_name  $ip;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   $abl;
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }</code></pre>
+<p>尝试浏览器访问ip，结果发现403 Forbidden，这个是跟权限有关的状态码。啊这不对劲，难道是conda安装的nginx有问题吗？就想尝试以下系统安装的方法。</p>
+<p>之后google一下发现yum无法安装的原因是nginx位于第三方的yum源里面，而不在centos官方yum源里。
+那就安装<abbr title="Extra Packages for Enterprise Linux">EPEL</abbr>源好了。</p>
+<pre class="shell"><code>yum install epel-release
+yum update
+yum install -y nginx</code></pre>
+<p>应该就可以完成nginx安装了。不过这样会导致，存在两个nginx进程，后面导致监控work process端口出现了一点点麻烦，干脆把yum安装的nginx删除（conda永远滴神！）。</p>
+<p>继续访问ip，居然还是403。喵喵喵？百度一下，发现是由于nginx用户和登录用户不一致导致的问题。</p>
+<pre class="shell"><code>vi $path/to/conf/file
+...
+# Run as a unique, less privileged user for security.
+ user nobody www-data;  ## Default: nobody</code></pre>
+<p>修改用户(user)和用户组(user group)后，重启nginx<code>nginx -s reload</code>就能通过ip访问。看到网站成功打开还蛮开心的，就像成功把积木玩具拼装好一样。</p>
+</div>
+<div id="domain-name-and-https" class="section level2">
+<h2>domain name and https</h2>
+<p>ip难以记忆，也不够cooooool，那必须得采用域名来进行访问。域名很便宜，很多地方都可以购买，烂大街的玩意，不过好的域名还真难找，gagua.com——市场营销精品店公司,gagua.cn(这个貌似有，不过还是想要个.com域名啊啊啊)。这还是，第一次发现<em>gagua</em>这名字，都会有人取呢。最后，还是选了个.xyz域名，虽然可能存在SEO之类的问题，不过对于我这样一个个人博客来说，应该无所谓了。</p>
+<ul>
+<li><input type="checkbox" disabled="" />
+其实我还不懂为什么域名还能收费，等以后的答案吧</li>
+<li><input type="checkbox" disabled="" />
+不知道能不能自己实现DNS解析服务</li>
+<li><input type="checkbox" disabled="" />
+www和@，CNAME</li>
+</ul>
+<p>在域名解析服务商解决DNS解析问题，相当于做一个域名到ip的映射，之后就是添加A记录不过这个也不是很懂，以后再看看吧。
+这一步需要等待一些时间。</p>
+<p>DNS解析成功后，修改<em>server_name</em>为域名</p>
+<pre class="shell"><code>server {
+        listen       80;
+        server_name  domain_name;</code></pre>
+<p>然后就可以尝试通过域名访问啦。可惜在浏览器无论是输入<em>domain_name</em> <em><a href="http://domain_name" class="uri">http://domain_name</a></em> 还是 <em><a href="http://domain_name:80" class="uri">http://domain_name:80</a></em> 都无法成功，无法找到服务器。而后，我突然意识到，pc端的谷歌浏览器默认使用<abbr title="hyper text transfer protocol over secure socket layer">https</abbr>，而nginx只监听了80端口。于是乎又将配置文件修改为443，即https的默认端口。
+<strong>此时需要确保端口打开</strong><code>firewall-cmd --zone=public --add-port=443/tcp --permanent</code></p>
+<p>满怀希望。</p>
+<p>结果却是：<code>ERR_SSL_PROTOCOL_ERROR</code>。搜索了一下错误码，发现是因为没有配置ssl协议。</p>
+<div id="https" class="section level3">
+<h3>https</h3>
+<p>https通过加入<abbr title="transfer layer security">TLS</abbr>/<abbr title="secure socket layer">SSL</abbr>协议在HTTP的基础上通过传输加密和身份认证保证了传输过程的安全性。</p>
+<div id="ssl证书申请" class="section level4">
+<h4>SSL证书申请</h4>
+<p>DNSPod可以直接申请CA证书。不得不说，腾讯还是会做点好事的，免费证书真香，还能自动添加解析记录。一键生成，下载证书后会得到一个与webserver相关的.crt证书文件和.key私钥文件。貌似好像可以自动生成证书，以后研究一下原理。</p>
+</div>
+<div id="ssl证书部署" class="section level4">
+<h4>SSL证书部署</h4>
+<p>感谢腾讯云的<a href="https://cloud.tencent.com/document/product/400/4143">悉心指导</a></p>
+<pre class="shell"><code>server {
+    #SSL 访问端口号为 443
+    listen 443 ssl; 
+ #填写绑定证书的域名
+    server_name cloud.tencent.com; 
+ #证书文件名称
+    ssl_certificate 1_cloud.tencent.com_bundle.crt; 
+ #私钥文件名称
+    ssl_certificate_key 2_cloud.tencent.com.key; 
+    ssl_session_timeout 5m;
+ #请按照以下协议配置
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2; 
+ #请按照以下套件配置，配置加密套件，写法遵循 openssl 标准。
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE; 
+    ssl_prefer_server_ciphers on;
+    location / {
+    #网站主页路径。此路径仅供参考，具体请您按照实际目录操作。
+        root html; 
+        index  index.html index.htm;
+    }
+}</code></pre>
+<p>而后还可以将HTTP 请求自动重定向到 HTTPS</p>
+<pre class="shell"><code>server {
+listen 443 ssl;
+#填写绑定证书的域名
+server_name cloud.tencent.com; 
+#证书文件名称
+ssl_certificate  1_cloud.tencent.com_bundle.crt; 
+#私钥文件名称
+ssl_certificate_key 2_cloud.tencent.com.key; 
+ssl_session_timeout 5m;
+ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+ssl_prefer_server_ciphers on;
+location / {
+   #网站主页路径。此路径仅供参考，具体请您按照实际目录操作。  
+   root html;
+  index index.html index.htm;
+}
+}
+server {
+listen 80;
+#填写绑定证书的域名
+server_name cloud.tencent.com; 
+#把http的域名请求转成https
+return 301 https://$host$request_uri; 
+}</code></pre>
+<p>此后就可通过https://domain_name访问。完美！</p>
+<p>就此，网站部署工作已经大体上完成。在<code>git pull</code>时，我突然又懒癌发作。一定有，自动pull的方法吧？虽然ssh登录顺便输个命令并不算多大的工作量，不过这理应是计算机该做的事情吧？！</p>
+</div>
+</div>
+</div>
+</div>
+<div id="webhook" class="section level1">
+<h1>webhook</h1>
+<div id="githook" class="section level2">
+<h2>githook</h2>
+<p>首先看到的是<a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks">githook</a>，提供自定义的脚本，在特定的动作发生后就会执行脚本。提供了client-side和server-side脚本，不过这个好像和我想要的server-web_server有点不同，代表的可能是远程仓库的server。</p>
+<p>其实也可以通过在client-side的脚本中设置commit触发ssh链接加git pull，不过总感觉这样的实现不够优雅，而且越过了远程仓库，总感觉会导致一些意料之外的问题。</p>
+</div>
+<div id="github-webhook" class="section level2">
+<h2>github webhook</h2>
+<p>github为每个仓库提供了<a href="https://docs.github.com/en/free-pro-team@latest/developers/webhooks-and-events">webhook</a>，github webhook与githook类似，都是响应动作(response action)。在仓库的setting中可以找到webhook设定，其中必须要添加的是<strong>Payload URL</strong>，webhook会在动作触发后向URL发送一个称为Payload的POST请求(request)，请求体(request body)为json，触发动作和发送的文件内容当然也能选择，详情见<a href="https://docs.github.com/en/free-pro-team@latest/developers/webhooks-and-events">文档</a>。</p>
+<p>当然，这只是发送了一个POST request，当时的我天真的以为在URL的文件夹下添加<code>git pull</code>的.sh文件就可以实现自动化。
+结果当然是，翻车了。</p>
+<pre class="html"><code>&lt;html&gt;
+&lt;head&gt;&lt;title&gt;405 Not Allowed&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;center&gt;&lt;h1&gt;405 Not Allowed&lt;/h1&gt;&lt;/center&gt;
+&lt;hr&gt;&lt;center&gt;nginx&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<div id="section" class="section level3">
+<h3>405</h3>
+<blockquote>
+<p>请求行中指定的请求方法不能被用于请求相应的资源。该响应必须返回一个Allow 头信息用以表示出当前资源能够接受的请求方法的列表。鉴于 PUT，DELETE 方法会对服务器上的资源进行写操作，因而绝大部分的网页服务器都不支持或者在默认配置下不允许上述请求方法，对于此类请求均会返回405错误。</p>
+</blockquote>
+<p>nginx作为webserver，不允许静态文件响应POST请求，因此会返回405错误。</p>
+<p>在网上找了nginx不响应POST请求的解决方法，不过按结果来看：</p>
+<pre class="html"><code>&lt;html&gt;
+&lt;head&gt;&lt;title&gt;502 Bad Gateway&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;center&gt;&lt;h1&gt;502 Bad Gateway&lt;/h1&gt;&lt;/center&gt;
+&lt;hr&gt;&lt;center&gt;nginx&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p><code>connect() failed (111: Connection refused) while connecting to upstream</code>上游是一个.sh文件，怎么可能进行连接。
+能response to POST request的，只能是(可以是)<strong>webserver</strong>， 既然现在所用的nginx不允许静态文件响应请求，那就只能再建立一个服务器监听特定端口，大多数现有的方案都是通过PHP来解决，不过我对这门语言实在是不太熟悉，最后还是选择了，<strong>Nodejs</strong></p>
+</div>
+</div>
+</div>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/nginx/">nginx</a>
+        
+            <a href="/tags/nodejs/">nodejs</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">Related contents</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/establish-a-website-by-r-blogdown/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Establish A Website With R Blogdown</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2021 A Technical Blog
+    </section>
+    
+    <section class="powerby">
+        
+            Modified by Gagua <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="2.0.1">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+            </main>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"
+    integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin="anonymous"></script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

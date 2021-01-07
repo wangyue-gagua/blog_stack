@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>nodejs on A Technical Blog</title>
+    <link>https://www.gagua.xyz/tags/nodejs/</link>
+    <description>Recent content in nodejs on A Technical Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 07 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/tags/nodejs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Deploy A Static Blog Site</title>
+      <link>https://www.gagua.xyz/p/deploy-a-static-blog-site/</link>
+      <pubDate>Thu, 07 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.gagua.xyz/p/deploy-a-static-blog-site/</guid>
+      <description>Deployment网站如果只运行在local host那还叫啥网站啊，如果部署在一个具有公网ip的服务器，这样就能实现让几乎所有人都能通过浏览器访问自己的网站。blogdown文档中提供了多种部署方案，但在这里选择部署至一台自己的vps上。
+此时需要:能通过互联网访问的主机（host）一台网站（博客）的文件client——浏览器server——webServer云计算，大数据如此火热的现在，主机现在显然不是问题。博客文件已经通过blogdown生成，浏览器也成为了大部分人的应用，接下来就只剩下webServer的问题了。
+WebServerWebServer可以解析HTTP，响应(response)一个请求(request)，通常都是返回一个html文件来让浏览器进行浏览。在这里我选用的是nginx，一款主要由Igor Sysoev在业余时间开发的HTTP和反向代理的服务器。当然还有其他功能，不过我暂时用上的就只有这两个。webserver当然由很多，如Apache等，甚至可以用python等自己实现一个，但是为什么我会选择nginx？主要是因为nginx内存占用小，并发高（这一点对于我暂时没有什么用处），有着优秀的静态处理性能（关键）。这对于私人博客这样一个静态网站来说，是完美的选择。
+install nginxnginx可以通过源码安装，但是在linux上想到的，果然还是yum优先。抱歉，由权限是真的可以为所欲为。
+yum install nginx......no package nginx available？居然显示仓库中没有nginx，怎么可能？很好，我选择万能的conda。安装好miniconda之后，conda search nginx，果然有，完成下载。在浏览器访问主机的ip地址，出现以下的界面：
+nginx 安装成功
+注意，conda 安装的nginx将根目录设置的是conda所在目录。
+git clone xxx.git从远程仓库git clone得到静态网页项目文件，之后的就是设置nginx的配置文件了。nginx -t直接找到配置文件位置
+# nginx -tnginx: the configuration file $path/to/conf/file syntax is oknginx: configuration file $path/to/conf/file test is successfulvi $path/to/conf/file...include sites.d/*.conf;nginx将sites.d/*.conf中的所有文件包含在了配置文件中。在sites.d/下新建一个.conf文件，</description>
+    </item>
+    
+  </channel>
+</rss>

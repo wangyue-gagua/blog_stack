@@ -6,7 +6,239 @@
         <description>Recent content on A Technical Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 06 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 07 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Deploy A Static Blog Site</title>
+        <link>https://www.gagua.xyz/p/deploy-a-static-blog-site/</link>
+        <pubDate>Thu, 07 Jan 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.gagua.xyz/p/deploy-a-static-blog-site/</guid>
+        <description>
+
+
+&lt;div id=&#34;deployment&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Deployment&lt;/h1&gt;
+&lt;p&gt;网站如果只运行在local host那还叫啥网站啊，如果部署在一个具有公网ip的服务器，这样就能实现让几乎所有人都能通过浏览器访问自己的网站。&lt;a href=&#34;https://bookdown.org/yihui/blogdown/deployment.html&#34;&gt;blogdown&lt;/a&gt;文档中提供了多种部署方案，但在这里选择部署至一台自己的vps上。&lt;/p&gt;
+&lt;div id=&#34;此时需要&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;此时需要:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;能通过互联网访问的主机（host）一台&lt;/li&gt;
+&lt;li&gt;网站（博客）的文件&lt;/li&gt;
+&lt;li&gt;client——浏览器&lt;/li&gt;
+&lt;li&gt;server——webServer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;云计算，大数据如此火热的现在，主机现在显然不是问题。博客文件已经通过blogdown生成，浏览器也成为了大部分人的应用，接下来就只剩下webServer的问题了。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;webserver&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;WebServer&lt;/h1&gt;
+&lt;p&gt;WebServer可以解析&lt;abbr title=&#34;hyper text transfer protocol&#34;&gt;HTTP&lt;/abbr&gt;，响应(response)一个请求(request)，通常都是返回一个html文件来让浏览器进行浏览。在这里我选用的是&lt;a href=&#34;http://nginx.org/en/&#34;&gt;nginx&lt;/a&gt;，一款主要由Igor Sysoev在&lt;em&gt;业余时间&lt;/em&gt;开发的HTTP和反向代理的服务器。当然还有其他功能，不过我暂时用上的就只有这两个。webserver当然由很多，如Apache等，甚至可以用python等自己实现一个，但是为什么我会选择nginx？主要是因为nginx内存占用小，并发高（这一点对于我暂时没有什么用处），有着优秀的静态处理性能（关键）。这对于私人博客这样一个静态网站来说，是完美的选择。&lt;/p&gt;
+&lt;div id=&#34;install-nginx&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;install nginx&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://nginx.org/en/&#34;&gt;nginx&lt;/a&gt;可以通过源码安装，但是在linux上想到的，果然还是yum优先。抱歉，由权限是真的可以为所欲为。&lt;/p&gt;
+&lt;pre class=&#34;shell&#34;&gt;&lt;code&gt;yum install nginx
+......
+no package nginx available&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;？居然显示仓库中没有nginx，怎么可能？很好，我选择万能的conda。
+安装好miniconda之后，&lt;code&gt;conda search nginx&lt;/code&gt;，果然有，完成下载。在浏览器访问主机的ip地址，出现以下的界面：&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://www.gagua.xyz/post/2021-01-07-deploy-a-static-blog-site/index.en_files/b92e58d99fd61d99cac151a5a241feb1.jpg&#34; style=&#34;width:80.0%&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;nginx 安装成功&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;注意，conda 安装的nginx将根目录设置的是conda所在目录。&lt;/p&gt;
+&lt;pre class=&#34;shell&#34;&gt;&lt;code&gt;git clone xxx.git&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;从远程仓库git clone得到静态网页项目文件，之后的就是设置nginx的配置文件了。
+&lt;code&gt;nginx -t&lt;/code&gt;直接找到配置文件位置&lt;/p&gt;
+&lt;pre class=&#34;shell&#34;&gt;&lt;code&gt;# nginx -t
+nginx: the configuration file $path/to/conf/file syntax is ok
+nginx: configuration file $path/to/conf/file test is successful
+vi $path/to/conf/file
+.
+.
+.
+include sites.d/*.conf;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;nginx将&lt;code&gt;sites.d/*.conf&lt;/code&gt;中的所有文件包含在了配置文件中。在&lt;code&gt;sites.d/&lt;/code&gt;下新建一个&lt;code&gt;.conf&lt;/code&gt;文件，&lt;/p&gt;
+&lt;pre class=&#34;shell&#34;&gt;&lt;code&gt;server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;假设网页文件夹的绝对路径为$abl，主机ip为$ip修改&lt;/p&gt;
+&lt;pre class=&#34;shell&#34;&gt;&lt;code&gt;server {
+        listen       80;
+        server_name  $ip;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   $abl;
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;尝试浏览器访问ip，结果发现403 Forbidden，这个是跟权限有关的状态码。啊这不对劲，难道是conda安装的nginx有问题吗？就想尝试以下系统安装的方法。&lt;/p&gt;
+&lt;p&gt;之后google一下发现yum无法安装的原因是nginx位于第三方的yum源里面，而不在centos官方yum源里。
+那就安装&lt;abbr title=&#34;Extra Packages for Enterprise Linux&#34;&gt;EPEL&lt;/abbr&gt;源好了。&lt;/p&gt;
+&lt;pre class=&#34;shell&#34;&gt;&lt;code&gt;yum install epel-release
+yum update
+yum install -y nginx&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;应该就可以完成nginx安装了。不过这样会导致，存在两个nginx进程，后面导致监控work process端口出现了一点点麻烦，干脆把yum安装的nginx删除（conda永远滴神！）。&lt;/p&gt;
+&lt;p&gt;继续访问ip，居然还是403。喵喵喵？百度一下，发现是由于nginx用户和登录用户不一致导致的问题。&lt;/p&gt;
+&lt;pre class=&#34;shell&#34;&gt;&lt;code&gt;vi $path/to/conf/file
+...
+# Run as a unique, less privileged user for security.
+ user nobody www-data;  ## Default: nobody&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;修改用户(user)和用户组(user group)后，重启nginx&lt;code&gt;nginx -s reload&lt;/code&gt;就能通过ip访问。看到网站成功打开还蛮开心的，就像成功把积木玩具拼装好一样。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;domain-name-and-https&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;domain name and https&lt;/h2&gt;
+&lt;p&gt;ip难以记忆，也不够cooooool，那必须得采用域名来进行访问。域名很便宜，很多地方都可以购买，烂大街的玩意，不过好的域名还真难找，gagua.com——市场营销精品店公司,gagua.cn(这个貌似有，不过还是想要个.com域名啊啊啊)。这还是，第一次发现&lt;em&gt;gagua&lt;/em&gt;这名字，都会有人取呢。最后，还是选了个.xyz域名，虽然可能存在SEO之类的问题，不过对于我这样一个个人博客来说，应该无所谓了。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input type=&#34;checkbox&#34; disabled=&#34;&#34; /&gt;
+其实我还不懂为什么域名还能收费，等以后的答案吧&lt;/li&gt;
+&lt;li&gt;&lt;input type=&#34;checkbox&#34; disabled=&#34;&#34; /&gt;
+不知道能不能自己实现DNS解析服务&lt;/li&gt;
+&lt;li&gt;&lt;input type=&#34;checkbox&#34; disabled=&#34;&#34; /&gt;
+www和@，CNAME&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在域名解析服务商解决DNS解析问题，相当于做一个域名到ip的映射，之后就是添加A记录不过这个也不是很懂，以后再看看吧。
+这一步需要等待一些时间。&lt;/p&gt;
+&lt;p&gt;DNS解析成功后，修改&lt;em&gt;server_name&lt;/em&gt;为域名&lt;/p&gt;
+&lt;pre class=&#34;shell&#34;&gt;&lt;code&gt;server {
+        listen       80;
+        server_name  domain_name;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后就可以尝试通过域名访问啦。可惜在浏览器无论是输入&lt;em&gt;domain_name&lt;/em&gt; &lt;em&gt;&lt;a href=&#34;http://domain_name&#34; class=&#34;uri&#34;&gt;http://domain_name&lt;/a&gt;&lt;/em&gt; 还是 &lt;em&gt;&lt;a href=&#34;http://domain_name:80&#34; class=&#34;uri&#34;&gt;http://domain_name:80&lt;/a&gt;&lt;/em&gt; 都无法成功，无法找到服务器。而后，我突然意识到，pc端的谷歌浏览器默认使用&lt;abbr title=&#34;hyper text transfer protocol over secure socket layer&#34;&gt;https&lt;/abbr&gt;，而nginx只监听了80端口。于是乎又将配置文件修改为443，即https的默认端口。
+&lt;strong&gt;此时需要确保端口打开&lt;/strong&gt;&lt;code&gt;firewall-cmd --zone=public --add-port=443/tcp --permanent&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;满怀希望。&lt;/p&gt;
+&lt;p&gt;结果却是：&lt;code&gt;ERR_SSL_PROTOCOL_ERROR&lt;/code&gt;。搜索了一下错误码，发现是因为没有配置ssl协议。&lt;/p&gt;
+&lt;div id=&#34;https&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;https&lt;/h3&gt;
+&lt;p&gt;https通过加入&lt;abbr title=&#34;transfer layer security&#34;&gt;TLS&lt;/abbr&gt;/&lt;abbr title=&#34;secure socket layer&#34;&gt;SSL&lt;/abbr&gt;协议在HTTP的基础上通过传输加密和身份认证保证了传输过程的安全性。&lt;/p&gt;
+&lt;div id=&#34;ssl证书申请&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;SSL证书申请&lt;/h4&gt;
+&lt;p&gt;DNSPod可以直接申请CA证书。不得不说，腾讯还是会做点好事的，免费证书真香，还能自动添加解析记录。一键生成，下载证书后会得到一个与webserver相关的.crt证书文件和.key私钥文件。貌似好像可以自动生成证书，以后研究一下原理。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ssl证书部署&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;SSL证书部署&lt;/h4&gt;
+&lt;p&gt;感谢腾讯云的&lt;a href=&#34;https://cloud.tencent.com/document/product/400/4143&#34;&gt;悉心指导&lt;/a&gt;&lt;/p&gt;
+&lt;pre class=&#34;shell&#34;&gt;&lt;code&gt;server {
+    #SSL 访问端口号为 443
+    listen 443 ssl; 
+ #填写绑定证书的域名
+    server_name cloud.tencent.com; 
+ #证书文件名称
+    ssl_certificate 1_cloud.tencent.com_bundle.crt; 
+ #私钥文件名称
+    ssl_certificate_key 2_cloud.tencent.com.key; 
+    ssl_session_timeout 5m;
+ #请按照以下协议配置
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2; 
+ #请按照以下套件配置，配置加密套件，写法遵循 openssl 标准。
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE; 
+    ssl_prefer_server_ciphers on;
+    location / {
+    #网站主页路径。此路径仅供参考，具体请您按照实际目录操作。
+        root html; 
+        index  index.html index.htm;
+    }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;而后还可以将HTTP 请求自动重定向到 HTTPS&lt;/p&gt;
+&lt;pre class=&#34;shell&#34;&gt;&lt;code&gt;server {
+listen 443 ssl;
+#填写绑定证书的域名
+server_name cloud.tencent.com; 
+#证书文件名称
+ssl_certificate  1_cloud.tencent.com_bundle.crt; 
+#私钥文件名称
+ssl_certificate_key 2_cloud.tencent.com.key; 
+ssl_session_timeout 5m;
+ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+ssl_prefer_server_ciphers on;
+location / {
+   #网站主页路径。此路径仅供参考，具体请您按照实际目录操作。  
+   root html;
+  index index.html index.htm;
+}
+}
+server {
+listen 80;
+#填写绑定证书的域名
+server_name cloud.tencent.com; 
+#把http的域名请求转成https
+return 301 https://$host$request_uri; 
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;此后就可通过https://domain_name访问。完美！&lt;/p&gt;
+&lt;p&gt;就此，网站部署工作已经大体上完成。在&lt;code&gt;git pull&lt;/code&gt;时，我突然又懒癌发作。一定有，自动pull的方法吧？虽然ssh登录顺便输个命令并不算多大的工作量，不过这理应是计算机该做的事情吧？！&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;webhook&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;webhook&lt;/h1&gt;
+&lt;div id=&#34;githook&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;githook&lt;/h2&gt;
+&lt;p&gt;首先看到的是&lt;a href=&#34;https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks&#34;&gt;githook&lt;/a&gt;，提供自定义的脚本，在特定的动作发生后就会执行脚本。提供了client-side和server-side脚本，不过这个好像和我想要的server-web_server有点不同，代表的可能是远程仓库的server。&lt;/p&gt;
+&lt;p&gt;其实也可以通过在client-side的脚本中设置commit触发ssh链接加git pull，不过总感觉这样的实现不够优雅，而且越过了远程仓库，总感觉会导致一些意料之外的问题。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;github-webhook&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;github webhook&lt;/h2&gt;
+&lt;p&gt;github为每个仓库提供了&lt;a href=&#34;https://docs.github.com/en/free-pro-team@latest/developers/webhooks-and-events&#34;&gt;webhook&lt;/a&gt;，github webhook与githook类似，都是响应动作(response action)。在仓库的setting中可以找到webhook设定，其中必须要添加的是&lt;strong&gt;Payload URL&lt;/strong&gt;，webhook会在动作触发后向URL发送一个称为Payload的POST请求(request)，请求体(request body)为json，触发动作和发送的文件内容当然也能选择，详情见&lt;a href=&#34;https://docs.github.com/en/free-pro-team@latest/developers/webhooks-and-events&#34;&gt;文档&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;当然，这只是发送了一个POST request，当时的我天真的以为在URL的文件夹下添加&lt;code&gt;git pull&lt;/code&gt;的.sh文件就可以实现自动化。
+结果当然是，翻车了。&lt;/p&gt;
+&lt;pre class=&#34;html&#34;&gt;&lt;code&gt;&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;&amp;lt;title&amp;gt;405 Not Allowed&amp;lt;/title&amp;gt;&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+&amp;lt;center&amp;gt;&amp;lt;h1&amp;gt;405 Not Allowed&amp;lt;/h1&amp;gt;&amp;lt;/center&amp;gt;
+&amp;lt;hr&amp;gt;&amp;lt;center&amp;gt;nginx&amp;lt;/center&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;section&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;405&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;请求行中指定的请求方法不能被用于请求相应的资源。该响应必须返回一个Allow 头信息用以表示出当前资源能够接受的请求方法的列表。鉴于 PUT，DELETE 方法会对服务器上的资源进行写操作，因而绝大部分的网页服务器都不支持或者在默认配置下不允许上述请求方法，对于此类请求均会返回405错误。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;nginx作为webserver，不允许静态文件响应POST请求，因此会返回405错误。&lt;/p&gt;
+&lt;p&gt;在网上找了nginx不响应POST请求的解决方法，不过按结果来看：&lt;/p&gt;
+&lt;pre class=&#34;html&#34;&gt;&lt;code&gt;&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;&amp;lt;title&amp;gt;502 Bad Gateway&amp;lt;/title&amp;gt;&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+&amp;lt;center&amp;gt;&amp;lt;h1&amp;gt;502 Bad Gateway&amp;lt;/h1&amp;gt;&amp;lt;/center&amp;gt;
+&amp;lt;hr&amp;gt;&amp;lt;center&amp;gt;nginx&amp;lt;/center&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;connect() failed (111: Connection refused) while connecting to upstream&lt;/code&gt;上游是一个.sh文件，怎么可能进行连接。
+能response to POST request的，只能是(可以是)&lt;strong&gt;webserver&lt;/strong&gt;， 既然现在所用的nginx不允许静态文件响应请求，那就只能再建立一个服务器监听特定端口，大多数现有的方案都是通过PHP来解决，不过我对这门语言实在是不太熟悉，最后还是选择了，&lt;strong&gt;Nodejs&lt;/strong&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
         <title>Establish A Website With R Blogdown</title>
         <link>https://www.gagua.xyz/p/establish-a-website-by-r-blogdown/</link>
         <pubDate>Wed, 06 Jan 2021 00:00:00 +0000</pubDate>
@@ -31,7 +263,7 @@
 &lt;p class=&#34;caption&#34;&gt;blogdown addins&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;（啊，为什么本地加载图片会失败啊，哦，原来是生成路径的问题，rmd要加入/post/）&lt;/p&gt;
-&lt;p&gt;总之，&lt;code&gt;blogdown:::serve_site()&lt;/code&gt;建立本地服务器用于预览，&lt;code&gt;blogdown::build_site()&lt;/code&gt;后能得到一个默认为&lt;strong&gt;public&lt;/strong&gt;的文件夹，里面就包含了博客所需要的所有文件。接下来就是github新建仓库，git commit, push remote一气呵成，很快啊。注意要在public文件夹建立仓库，因为建站所需的文件只有这些。&lt;/p&gt;
+&lt;p&gt;总之，&lt;code&gt;blogdown:::serve_site()&lt;/code&gt;建立本地服务器用于预览，&lt;code&gt;blogdown::build_site()&lt;/code&gt;后能得到一个默认为&lt;strong&gt;public&lt;/strong&gt;的文件夹，里面就包含了博客所需要的所有文件。接下来就是github新建仓库, git commit, push remote一气呵成，很快啊。注意要在public文件夹建立仓库，因为建站所需的文件只有这些。&lt;/p&gt;
 &lt;/div&gt;
 </description>
         </item>

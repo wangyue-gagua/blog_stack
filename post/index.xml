@@ -6,7 +6,24 @@
     <description>Recent content in Posts on A Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 06 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 07 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Deploy A Static Blog Site</title>
+      <link>https://www.gagua.xyz/p/deploy-a-static-blog-site/</link>
+      <pubDate>Thu, 07 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.gagua.xyz/p/deploy-a-static-blog-site/</guid>
+      <description>Deployment网站如果只运行在local host那还叫啥网站啊，如果部署在一个具有公网ip的服务器，这样就能实现让几乎所有人都能通过浏览器访问自己的网站。blogdown文档中提供了多种部署方案，但在这里选择部署至一台自己的vps上。
+此时需要:能通过互联网访问的主机（host）一台网站（博客）的文件client——浏览器server——webServer云计算，大数据如此火热的现在，主机现在显然不是问题。博客文件已经通过blogdown生成，浏览器也成为了大部分人的应用，接下来就只剩下webServer的问题了。
+WebServerWebServer可以解析HTTP，响应(response)一个请求(request)，通常都是返回一个html文件来让浏览器进行浏览。在这里我选用的是nginx，一款主要由Igor Sysoev在业余时间开发的HTTP和反向代理的服务器。当然还有其他功能，不过我暂时用上的就只有这两个。webserver当然由很多，如Apache等，甚至可以用python等自己实现一个，但是为什么我会选择nginx？主要是因为nginx内存占用小，并发高（这一点对于我暂时没有什么用处），有着优秀的静态处理性能（关键）。这对于私人博客这样一个静态网站来说，是完美的选择。
+install nginxnginx可以通过源码安装，但是在linux上想到的，果然还是yum优先。抱歉，由权限是真的可以为所欲为。
+yum install nginx......no package nginx available？居然显示仓库中没有nginx，怎么可能？很好，我选择万能的conda。安装好miniconda之后，conda search nginx，果然有，完成下载。在浏览器访问主机的ip地址，出现以下的界面：
+nginx 安装成功
+注意，conda 安装的nginx将根目录设置的是conda所在目录。
+git clone xxx.git从远程仓库git clone得到静态网页项目文件，之后的就是设置nginx的配置文件了。nginx -t直接找到配置文件位置
+# nginx -tnginx: the configuration file $path/to/conf/file syntax is oknginx: configuration file $path/to/conf/file test is successfulvi $path/to/conf/file...include sites.d/*.conf;nginx将sites.d/*.conf中的所有文件包含在了配置文件中。在sites.d/下新建一个.conf文件，</description>
+    </item>
+    
     <item>
       <title>Establish A Website With R Blogdown</title>
       <link>https://www.gagua.xyz/p/establish-a-website-by-r-blogdown/</link>
@@ -18,7 +35,7 @@
 blogdown在这想稍微详细说一下blogdown。众所周知，hugo是一款以Go开发的强大的静态网站生成器，那为什么还要开发blogdown呢？很简单，因为hugo暂时还没有完成对.Rmd的支持，但rmarkdown直接在网页中同时包含代码和生成的结果实在是太香了（其实还有更多的功能，但我就是个视觉动物）。Yihui因此开发了blogdown（有技术真的可以为所欲为吗），实现了对.Rmd的解析渲染，并且能实现bookdown、rmarkdown的绝大部分特性（yihui怎么又是你，难道这就是推荐式算法吗，信息茧房恐怖如斯），加上Shiny应该可以实现交互式的页面应用，很可惜我暂时还不懂shiny咋用。这里又要吹一波RSstudio了，Addins提供了包括新增post和插入image等操作的快捷方式。
 blogdown addins
 （啊，为什么本地加载图片会失败啊，哦，原来是生成路径的问题，rmd要加入/post/）
-总之，blogdown:::serve_site()建立本地服务器用于预览，blogdown::build_site()后能得到一个默认为public的文件夹，里面就包含了博客所需要的所有文件。接下来就是github新建仓库，git commit, push remote一气呵成，很快啊。注意要在public文件夹建立仓库，因为建站所需的文件只有这些。
+总之，blogdown:::serve_site()建立本地服务器用于预览，blogdown::build_site()后能得到一个默认为public的文件夹，里面就包含了博客所需要的所有文件。接下来就是github新建仓库, git commit, push remote一气呵成，很快啊。注意要在public文件夹建立仓库，因为建站所需的文件只有这些。
 </description>
     </item>
     
