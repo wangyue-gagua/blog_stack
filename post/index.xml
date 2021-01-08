@@ -6,7 +6,17 @@
     <description>Recent content in Posts on A Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 08 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Auto Pull Using Webhook And Nodejs</title>
+      <link>https://www.gagua.xyz/p/auto-pull-using-webhook-and-nodejs/</link>
+      <pubDate>Fri, 08 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.gagua.xyz/p/auto-pull-using-webhook-and-nodejs/</guid>
+      <description>Purpose I need to build a webserver using nodejs which listens to a certain port. Besides, writing a simple shell script to implement auto pull is necessary. It&amp;rsquo;s vital to find a approach which is able to parse a json content and execute shell scripts. Considering latent security problem, enable SSL verification and setting secret token is recommended.
+install nodejs I first tried conda search node then find the version of nodejs in conda repository is not the latest version.</description>
+    </item>
+    
     <item>
       <title>Deploy A Static Blog Site</title>
       <link>https://www.gagua.xyz/p/deploy-a-static-blog-site/</link>
