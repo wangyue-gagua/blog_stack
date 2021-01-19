@@ -6,7 +6,26 @@
     <description>Recent content in Posts on A Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 19 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Integrated R Workflow</title>
+      <link>https://www.gagua.xyz/p/integrated-r-workflow/</link>
+      <pubDate>Tue, 19 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.gagua.xyz/p/integrated-r-workflow/</guid>
+      <description>Shiny 最近导师觉得找我要图太麻烦了，就让我弄一个网页版的工具来进行可视化。虽然这事之前确实没做过，不过对Shiny还算有所耳闻，初步想了一下，感觉不算什么太难的事情，就答应了1。
+Shiny也算是Rstudio强推的一个通过R构建交互式网页的工具，不得不感慨一下Rstudio为R的社区生态做出的卓越贡献。Shiny教学看起来还挺完善的，视频版的教学据说内容更丰富，不过说实话这连个自动字幕都没有，就纯练英语听力，实在是太为难我了，果断选择Written版。初学者的教学就7章，花了大概两个小时看完了，顺便跟着做了点练习，教学只提炼出了最基础的部分，不过也覆盖了生成一个完整的网页APP需要的部分，循序渐进好上手，有R的基础整这个还是挺方便的。
+Deploy 本来想放在自己的服务器的，不过想到我服务器可怜的体量，还是别再开一个web server了。而且，shinyapps可以再Rstudio IDE中自动推送啥的，还不用再去github上整个仓库，感觉自家的工具链是真的爽，难怪有这么多人喜欢用苹果，用的不是手机，而是生态啊。
+my Shiny app不过感觉在用户体验方面还是有点点小问题，初次打开太慢了，这个也确实没办法，毕竟shiny启动需要加载一堆R包，还得加载数据，而且感觉这种网页不方便进行CDN。麻烦的在于，免费版的shinyapp服务每个月只有25小时的活跃(active)时间，也就是，当一段时间无人访问时，服务器会自动进入休眠状态，那再打开网页，就又相当于一次服务重启，相当耗时。如果有思路却要等网页加载，总感觉有点耽误科研效率，嘛，反正我也有本地数据，如果实在觉得性能不行，那就去申请经费整个会员吧。
+R workflow 想想最近的分析工作，大概就是：
+ 数据挖掘2 在linux服务器上完成对性能需求较大的mapping, counting等步骤。这步通过基于python编写的snakemake完成了流程大体上的自动化。以后最好加个multiqc完成质量控制的可视化。 可视化。在本地服务器上利用R完成数据挖掘和可视化，Rstudio是真的好用，就是字体有点难受，不好区分大小写，视觉上感觉还是更喜欢vscode。之前一直是用Rscript完成分析，这次换成是Rmarkdown。其实本质上没有区别，不过Rmarkdown可以自动生成pptx等展示文档，避免了汇报工作时还得手动插图片的尴尬3。 分享交互。用网页应用进行分享交互可能是最流行的方式了。这里采用Shiny，毕竟基于R，减少了学习成本，部署构建都挺快的，现在也还能满足需求。  通过这样一个R-&amp;gt;Rmarkdown-&amp;gt;Shiny的工作流，大体上实现了数据分析工作的自动化，最后的结果看起来也挺美观的。在这里再次感谢R的开源社区提供的强大工具，使得我甚至还有时间在这写blog。然而，还是存在平台的割裂，没有完全实现自动化。如果能把2、3步也放在远程服务器上解决就好了。这里存在的问题就是没钱4，好吧，如果能购买Rstudio的社区版就好了。这样就可以通过snakemake继续调用R脚本，打包成一个完整的流程，不过以后这流程也不一定能再走一遍了。还好，snakemake似乎支持模块化，下次把流程优化重构成一个个单独的模组吧。如果能实现，就可以避免下载文件等一堆繁琐的事情了，也不用非得待在实验室，真好啊真好啊😉。
+  朕意已决？ &amp;#x21a9;&amp;#xfe0e;
+ markdown怎么实现description list呀？ &amp;#x21a9;&amp;#xfe0e;
+ 就是感觉对ppt的支持还不够完整，当然很大可能是我太菜了。 &amp;#x21a9;&amp;#xfe0e;
+ 人唯一的病就是穷病？ &amp;#x21a9;&amp;#xfe0e;
+   </description>
+    </item>
+    
     <item>
       <title>Auto Pull Using Webhook And Nodejs</title>
       <link>https://www.gagua.xyz/p/auto-pull-using-webhook-and-nodejs/</link>

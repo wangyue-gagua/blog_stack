@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Shiny 最近导师觉得找我要图太麻烦了，就让我弄一个网页版的工具来进行可视化。虽然这事之前确实没做过，不过对Shiny还算有所耳闻，初步想了一下，感觉不算什么太难的事情，就答应了1。
+Shiny也算是Rstudio强推的一个通过R构建交互式网页的工具，不得不感慨一下Rstudio为R的社区生态做出的卓越贡献。Shiny教学看起来还挺完善的，视频版的教学据说内容更丰富，不过说实话这连个自动字幕都没有，就纯练英语听力，实在是太为难我了，果断选择Written版。初学者的教学就7章，花了大概两个小时看完了，顺便跟着做了点练习，教学只提炼出了最基础的部分，不过也覆盖了生成一个完整的网页APP需要的部分，循序渐进好上手，有R的基础整这个还是挺方便的。
+Deploy 本来想放在自己的服务器的，不过想到我服务器可怜的体量，还是别再开一个web server了。而且，shinyapps可以再Rstudio IDE中自动推送啥的，还不用再去github上整个仓库，感觉自家的工具链是真的爽，难怪有这么多人喜欢用苹果，用的不是手机，而是生态啊。
+my Shiny app不过感觉在用户体验方面还是有点点小问题，初次打开太慢了，这个也确实没办法，毕竟shiny启动需要加载一堆R包，还得加载数据，而且感觉这种网页不方便进行CDN。麻烦的在于，免费版的shinyapp服务每个月只有25小时的活跃(active)时间，也就是，当一段时间无人访问时，服务器会自动进入休眠状态，那再打开网页，就又相当于一次服务重启，相当耗时。如果有思路却要等网页加载，总感觉有点耽误科研效率，嘛，反正我也有本地数据，如果实在觉得性能不行，那就去申请经费整个会员吧。
+R workflow 想想最近的分析工作，大概就是：
+ 数据挖掘2 在linux服务器上完成对性能需求较大的mapping, counting等步骤。这步通过基于python编写的snakemake完成了流程大体上的自动化。以后最好加个multiqc完成质量控制的可视化。 可视化。在本地服务器上利用R完成数据挖掘和可视化，Rstudio是真的好用，就是字体有点难受，不好区分大小写，视觉上感觉还是更喜欢vscode。之前一直是用Rscript完成分析，这次换成是Rmarkdown。其实本质上没有区别，不过Rmarkdown可以自动生成pptx等展示文档，避免了汇报工作时还得手动插图片的尴尬3。 分享交互。用网页应用进行分享交互可能是最流行的方式了。这里采用Shiny，毕竟基于R，减少了学习成本，部署构建都挺快的，现在也还能满足需求。  通过这样一个R-&amp;gt;Rmarkdown-&amp;gt;Shiny的工作流，大体上实现了数据分析工作的自动化，最后的结果看起来也挺美观的。在这里再次感谢R的开源社区提供的强大工具，使得我甚至还有时间在这写blog。然而，还是存在平台的割裂，没有完全实现自动化。如果能把2、3步也放在远程服务器上解决就好了。这里存在的问题就是没钱4，好吧，如果能购买Rstudio的社区版就好了。这样就可以通过snakemake继续调用R脚本，打包成一个完整的流程，不过以后这流程也不一定能再走一遍了。还好，snakemake似乎支持模块化，下次把流程优化重构成一个个单独的模组吧。如果能实现，就可以避免下载文件等一堆繁琐的事情了，也不用非得待在实验室，真好啊真好啊😉。
+  朕意已决？ &amp;#x21a9;&amp;#xfe0e;
+ markdown怎么实现description list呀？ &amp;#x21a9;&amp;#xfe0e;
+ 就是感觉对ppt的支持还不够完整，当然很大可能是我太菜了。 &amp;#x21a9;&amp;#xfe0e;
+ 人唯一的病就是穷病？ &amp;#x21a9;&amp;#xfe0e;
+   '><title>Integrated R Workflow</title>
+
+<link rel='canonical' href='https://www.gagua.xyz/p/integrated-r-workflow/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Integrated R Workflow'>
+<meta property='og:description' content='Shiny 最近导师觉得找我要图太麻烦了，就让我弄一个网页版的工具来进行可视化。虽然这事之前确实没做过，不过对Shiny还算有所耳闻，初步想了一下，感觉不算什么太难的事情，就答应了1。
+Shiny也算是Rstudio强推的一个通过R构建交互式网页的工具，不得不感慨一下Rstudio为R的社区生态做出的卓越贡献。Shiny教学看起来还挺完善的，视频版的教学据说内容更丰富，不过说实话这连个自动字幕都没有，就纯练英语听力，实在是太为难我了，果断选择Written版。初学者的教学就7章，花了大概两个小时看完了，顺便跟着做了点练习，教学只提炼出了最基础的部分，不过也覆盖了生成一个完整的网页APP需要的部分，循序渐进好上手，有R的基础整这个还是挺方便的。
+Deploy 本来想放在自己的服务器的，不过想到我服务器可怜的体量，还是别再开一个web server了。而且，shinyapps可以再Rstudio IDE中自动推送啥的，还不用再去github上整个仓库，感觉自家的工具链是真的爽，难怪有这么多人喜欢用苹果，用的不是手机，而是生态啊。
+my Shiny app不过感觉在用户体验方面还是有点点小问题，初次打开太慢了，这个也确实没办法，毕竟shiny启动需要加载一堆R包，还得加载数据，而且感觉这种网页不方便进行CDN。麻烦的在于，免费版的shinyapp服务每个月只有25小时的活跃(active)时间，也就是，当一段时间无人访问时，服务器会自动进入休眠状态，那再打开网页，就又相当于一次服务重启，相当耗时。如果有思路却要等网页加载，总感觉有点耽误科研效率，嘛，反正我也有本地数据，如果实在觉得性能不行，那就去申请经费整个会员吧。
+R workflow 想想最近的分析工作，大概就是：
+ 数据挖掘2 在linux服务器上完成对性能需求较大的mapping, counting等步骤。这步通过基于python编写的snakemake完成了流程大体上的自动化。以后最好加个multiqc完成质量控制的可视化。 可视化。在本地服务器上利用R完成数据挖掘和可视化，Rstudio是真的好用，就是字体有点难受，不好区分大小写，视觉上感觉还是更喜欢vscode。之前一直是用Rscript完成分析，这次换成是Rmarkdown。其实本质上没有区别，不过Rmarkdown可以自动生成pptx等展示文档，避免了汇报工作时还得手动插图片的尴尬3。 分享交互。用网页应用进行分享交互可能是最流行的方式了。这里采用Shiny，毕竟基于R，减少了学习成本，部署构建都挺快的，现在也还能满足需求。  通过这样一个R-&amp;gt;Rmarkdown-&amp;gt;Shiny的工作流，大体上实现了数据分析工作的自动化，最后的结果看起来也挺美观的。在这里再次感谢R的开源社区提供的强大工具，使得我甚至还有时间在这写blog。然而，还是存在平台的割裂，没有完全实现自动化。如果能把2、3步也放在远程服务器上解决就好了。这里存在的问题就是没钱4，好吧，如果能购买Rstudio的社区版就好了。这样就可以通过snakemake继续调用R脚本，打包成一个完整的流程，不过以后这流程也不一定能再走一遍了。还好，snakemake似乎支持模块化，下次把流程优化重构成一个个单独的模组吧。如果能实现，就可以避免下载文件等一堆繁琐的事情了，也不用非得待在实验室，真好啊真好啊😉。
+  朕意已决？ &amp;#x21a9;&amp;#xfe0e;
+ markdown怎么实现description list呀？ &amp;#x21a9;&amp;#xfe0e;
+ 就是感觉对ppt的支持还不够完整，当然很大可能是我太菜了。 &amp;#x21a9;&amp;#xfe0e;
+ 人唯一的病就是穷病？ &amp;#x21a9;&amp;#xfe0e;
+   '>
+<meta property='og:url' content='https://www.gagua.xyz/p/integrated-r-workflow/'>
+<meta property='og:site_name' content='A Technical Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Shiny' /><meta property='article:published_time' content='2021-01-19T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-01-19T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Integrated R Workflow">
+<meta name="twitter:description" content="Shiny 最近导师觉得找我要图太麻烦了，就让我弄一个网页版的工具来进行可视化。虽然这事之前确实没做过，不过对Shiny还算有所耳闻，初步想了一下，感觉不算什么太难的事情，就答应了1。
+Shiny也算是Rstudio强推的一个通过R构建交互式网页的工具，不得不感慨一下Rstudio为R的社区生态做出的卓越贡献。Shiny教学看起来还挺完善的，视频版的教学据说内容更丰富，不过说实话这连个自动字幕都没有，就纯练英语听力，实在是太为难我了，果断选择Written版。初学者的教学就7章，花了大概两个小时看完了，顺便跟着做了点练习，教学只提炼出了最基础的部分，不过也覆盖了生成一个完整的网页APP需要的部分，循序渐进好上手，有R的基础整这个还是挺方便的。
+Deploy 本来想放在自己的服务器的，不过想到我服务器可怜的体量，还是别再开一个web server了。而且，shinyapps可以再Rstudio IDE中自动推送啥的，还不用再去github上整个仓库，感觉自家的工具链是真的爽，难怪有这么多人喜欢用苹果，用的不是手机，而是生态啊。
+my Shiny app不过感觉在用户体验方面还是有点点小问题，初次打开太慢了，这个也确实没办法，毕竟shiny启动需要加载一堆R包，还得加载数据，而且感觉这种网页不方便进行CDN。麻烦的在于，免费版的shinyapp服务每个月只有25小时的活跃(active)时间，也就是，当一段时间无人访问时，服务器会自动进入休眠状态，那再打开网页，就又相当于一次服务重启，相当耗时。如果有思路却要等网页加载，总感觉有点耽误科研效率，嘛，反正我也有本地数据，如果实在觉得性能不行，那就去申请经费整个会员吧。
+R workflow 想想最近的分析工作，大概就是：
+ 数据挖掘2 在linux服务器上完成对性能需求较大的mapping, counting等步骤。这步通过基于python编写的snakemake完成了流程大体上的自动化。以后最好加个multiqc完成质量控制的可视化。 可视化。在本地服务器上利用R完成数据挖掘和可视化，Rstudio是真的好用，就是字体有点难受，不好区分大小写，视觉上感觉还是更喜欢vscode。之前一直是用Rscript完成分析，这次换成是Rmarkdown。其实本质上没有区别，不过Rmarkdown可以自动生成pptx等展示文档，避免了汇报工作时还得手动插图片的尴尬3。 分享交互。用网页应用进行分享交互可能是最流行的方式了。这里采用Shiny，毕竟基于R，减少了学习成本，部署构建都挺快的，现在也还能满足需求。  通过这样一个R-&amp;gt;Rmarkdown-&amp;gt;Shiny的工作流，大体上实现了数据分析工作的自动化，最后的结果看起来也挺美观的。在这里再次感谢R的开源社区提供的强大工具，使得我甚至还有时间在这写blog。然而，还是存在平台的割裂，没有完全实现自动化。如果能把2、3步也放在远程服务器上解决就好了。这里存在的问题就是没钱4，好吧，如果能购买Rstudio的社区版就好了。这样就可以通过snakemake继续调用R脚本，打包成一个完整的流程，不过以后这流程也不一定能再走一遍了。还好，snakemake似乎支持模块化，下次把流程优化重构成一个个单独的模组吧。如果能实现，就可以避免下载文件等一堆繁琐的事情了，也不用非得待在实验室，真好啊真好啊😉。
+  朕意已决？ &amp;#x21a9;&amp;#xfe0e;
+ markdown怎么实现description list呀？ &amp;#x21a9;&amp;#xfe0e;
+ 就是感觉对ppt的支持还不够完整，当然很大可能是我太菜了。 &amp;#x21a9;&amp;#xfe0e;
+ 人唯一的病就是穷病？ &amp;#x21a9;&amp;#xfe0e;
+   ">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+    </head>
+    <body class="">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.body.dataset.scheme = 'dark';
+        } else {
+            document.body.dataset.scheme = 'light';
+        }
+    })();
+</script><div class="container main-container flex on-phone--column extended article-page with-toolbar">
+            <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header class="site-info">
+        
+            <figure class="site-avatar">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu677977ea8fe1bf1a7b4f18cdbbe66107_44020_300x0_resize_box_2.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+        
+        <h1 class="site-name"><a href="https://www.gagua.xyz">A Technical Blog</a></h1>
+        <h2 class="site-description">log something fantastic, data science , web front end and so on.</h2>
+    </header>
+
+    <ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        
+            <li id="dark-mode-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <span>Dark Mode</span>
+            </li>
+        
+    </ol>
+</aside>
+
+            <main class="main full-width">
+    <div id="article-toolbar">
+        <a href="https://www.gagua.xyz" class="back-home">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+            <span>Back</span>
+        </a>
+    </div>
+
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/r/" >
+                R
+            </a>
+        
+            <a href="/categories/misc/" >
+                Misc
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/integrated-r-workflow/">Integrated R Workflow</a>
+    </h2>
+
+    <footer class="article-time">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <time class="article-time--published">Jan 19, 2021</time>
+    </footer></div>
+</header>
+
+    <section class="article-content">
+    <h2 id="shiny">Shiny</h2>
+<p>最近导师觉得找我要图太麻烦了，就让我弄一个网页版的工具来进行可视化。虽然这事之前确实没做过，不过对Shiny还算有所耳闻，初步想了一下，感觉不算什么太难的事情，就答应了<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>。</p>
+<p><a class="link" href="https://shiny.rstudio.com/"  target="_blank" rel="noopener"
+    >Shiny</a>也算是Rstudio强推的一个通过R构建交互式网页的工具，不得不感慨一下Rstudio为R的社区生态做出的卓越贡献。Shiny教学看起来还挺完善的，视频版的教学据说内容更丰富，不过说实话这连个自动字幕都没有，就纯练英语听力，实在是太为难我了，果断选择<em>Written</em>版。初学者的教学就7章，花了大概两个小时看完了，顺便跟着做了点练习，教学只提炼出了最基础的部分，不过也覆盖了生成一个完整的网页APP需要的部分，循序渐进好上手，有R的基础整这个还是挺方便的。</p>
+<h3 id="deploy">Deploy</h3>
+<p>本来想放在自己的服务器的，不过想到我服务器可怜的体量，还是别再开一个web server了。而且，<a class="link" href="https://www.shinyapps.io/"  target="_blank" rel="noopener"
+    >shinyapps</a>可以再Rstudio IDE中自动推送啥的，还不用再去github上整个仓库，感觉自家的工具链是真的爽，难怪有这么多人喜欢用苹果，用的不是手机，而是生态啊。</p>
+<p><a class="link" href="https://gagua.shinyapps.io/circadian/"  target="_blank" rel="noopener"
+    >my Shiny app</a>不过感觉在用户体验方面还是有点点小问题，初次打开太慢了，这个也确实没办法，毕竟shiny启动需要加载一堆R包，还得加载数据，而且感觉这种网页不方便进行<abbr title="content distribution network">CDN</abbr>。麻烦的在于，免费版的shinyapp服务每个月只有25小时的活跃(active)时间，也就是，当一段时间无人访问时，服务器会自动进入休眠状态，那再打开网页，就又相当于一次服务重启，相当耗时。如果有思路却要等网页加载，总感觉有点耽误科研效率，嘛，反正我也有本地数据，如果实在觉得性能不行，那就去申请经费整个会员吧。</p>
+<h2 id="r-workflow">R workflow</h2>
+<p>想想最近的分析工作，大概就是：</p>
+<ol>
+<li>数据挖掘<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>
+在linux服务器上完成对性能需求较大的mapping, counting等步骤。这步通过基于python编写的<a class="link" href="https://snakemake.readthedocs.io/en/stable/"  target="_blank" rel="noopener"
+    >snakemake</a>完成了流程大体上的自动化。以后最好加个multiqc完成质量控制的可视化。</li>
+<li>可视化。在本地服务器上利用R完成数据挖掘和可视化，Rstudio是真的好用，就是字体有点难受，不好区分大小写，视觉上感觉还是更喜欢vscode。之前一直是用Rscript完成分析，这次换成是Rmarkdown。其实本质上没有区别，不过Rmarkdown可以自动生成pptx等展示文档，避免了汇报工作时还得手动插图片的尴尬<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>。</li>
+<li>分享交互。用网页应用进行分享交互可能是最流行的方式了。这里采用Shiny，毕竟基于R，减少了学习成本，部署构建都挺快的，现在也还能满足需求。</li>
+</ol>
+<p>通过这样一个R-&gt;Rmarkdown-&gt;Shiny的工作流，大体上实现了数据分析工作的自动化，最后的结果看起来也挺美观的。在这里再次感谢R的开源社区提供的强大工具，使得我甚至还有时间在这写blog。然而，还是存在平台的割裂，没有完全实现自动化。如果能把2、3步也放在远程服务器上解决就好了。这里存在的问题就是没钱<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>，好吧，如果能购买Rstudio的社区版就好了。这样就可以通过snakemake继续调用R脚本，打包成一个完整的流程，不过以后这流程也不一定能再走一遍了。还好，snakemake似乎支持模块化，下次把流程优化重构成一个个单独的模组吧。如果能实现，就可以避免下载文件等一堆繁琐的事情了，也不用非得待在实验室，真好啊真好啊😉。</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><strong>朕意已决</strong>？ <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>markdown怎么实现<strong>description list</strong>呀？ <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p>就是感觉对ppt的支持还不够完整，当然很大可能是我太菜了。 <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4" role="doc-endnote">
+<p>人唯一的病就是穷病？ <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/shiny/">Shiny</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">Related contents</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/testtt/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">testtt</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2021 A Technical Blog
+    </section>
+    
+    <section class="powerby">
+        
+            Modified by Gagua <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="2.0.1">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+            </main>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"
+    integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin="anonymous"></script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
