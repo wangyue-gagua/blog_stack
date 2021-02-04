@@ -90,7 +90,7 @@ blogdown addins
 不告而别的你 就算为了我着想
 这么沉痛的呵护 我怎么能翱翔
 最暖的憂傷 - 田馥甄
- 图片  Photo by Florian Klauer on Unsplash   Photo by Luca Bravo on Unsplash</description>
+ 图片 Photo by Florian Klauer on Unsplash Photo by Luca Bravo on Unsplash</description>
     </item>
     
     <item>
@@ -127,6 +127,17 @@ blogdown addins
       
       <guid>https://www.gagua.xyz/p/emoji-support/</guid>
       <description>&lt;p&gt;Emoji can be enabled in a Hugo project in a number of ways.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hello R Markdown</title>
+      <link>https://www.gagua.xyz/p/hello-r-markdown/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      
+      <guid>https://www.gagua.xyz/p/hello-r-markdown/</guid>
+      <description>R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+You can embed an R code chunk like this:
+summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.</description>
     </item>
     
   </channel>
