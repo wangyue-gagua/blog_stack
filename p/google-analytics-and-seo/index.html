@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-us">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='An article introduce the reason and technical model selection about building this blog'><title>Establish A Website With R Blogdown</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='add google analytic feature and google SEO'><title>Google Analytics And SEO</title>
 
-<link rel='canonical' href='https://www.gagua.xyz/p/establish-a-website-by-r-blogdown/'>
+<link rel='canonical' href='https://www.gagua.xyz/p/google-analytics-and-seo/'>
 
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Establish A Website With R Blogdown'>
-<meta property='og:description' content='An article introduce the reason and technical model selection about building this blog'>
-<meta property='og:url' content='https://www.gagua.xyz/p/establish-a-website-by-r-blogdown/'>
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Google Analytics And SEO'>
+<meta property='og:description' content='add google analytic feature and google SEO'>
+<meta property='og:url' content='https://www.gagua.xyz/p/google-analytics-and-seo/'>
 <meta property='og:site_name' content='A Technical Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='hugo' /><meta property='article:tag' content='blogdown' /><meta property='article:published_time' content='2021-01-06T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-01-06T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="Establish A Website With R Blogdown">
-<meta name="twitter:description" content="An article introduce the reason and technical model selection about building this blog">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='GA' /><meta property='article:tag' content='SEO' /><meta property='article:published_time' content='2021-02-05T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-02-05T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Google Analytics And SEO">
+<meta name="twitter:description" content="add google analytic feature and google SEO">
     <link rel="shortcut icon" href="img/favicon.ico" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-43X2ZTW7HX"></script>
@@ -206,12 +206,12 @@
     
 
     <h2 class="article-title">
-        <a href="/p/establish-a-website-by-r-blogdown/">Establish A Website With R Blogdown</a>
+        <a href="/p/google-analytics-and-seo/">Google Analytics And SEO</a>
     </h2>
 
     
     <h3 class="article-subtitle">
-        An article introduce the reason and technical model selection about building this blog
+        add google analytic feature and google SEO
     </h3>
     <footer class="article-time">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -222,32 +222,63 @@
 
 
 
-        <time class="article-time--published">Jan 06, 2021</time>
+        <time class="article-time--published">Feb 05, 2021</time>
     </footer></div>
 </header>
 
     <section class="article-content">
-    
-
-
-<div id="缘起" class="section level1">
-<h1>缘起</h1>
-<p><a href="https://bookdown.org/yihui/blogdown">Blogdown</a>是由<a href="https://yihui.org">Yihui Xie</a>基于<a href="https://gohugo.io/">Hugo</a>编写的一个R包，用于便捷地进行静态网站的构建。由于Yihui大神和RStudio团队的不懈努力，一个充满活力的R语言社区得以构建。加上之前偶然尝试了Yihui的另一个R包Rmarkdown，不由惊为天人。恰巧最近也学了点web相关的知识，html,css,native js等等，于是就产生了构建一个博客的想法，顺便也能记录一些在探索中遇到的技术问题，分享数据可视化的一些美图，实践《计算机网络，自顶而下方法》，《深入理解计算机系统》。</p>
-</div>
-<div id="选型" class="section level1">
-<h1>选型</h1>
-<p>Blogdown下载直接<code>install.packages()</code>，在比较新版本的RStudio IDE中，New Project中可以直接选择website using blogdown，RStudio会自动下载新版本的Hugo，在此也能选择主题(theme github)。在Hugo官网中纠结了很久，最后还是选了<a href="https://themes.gohugo.io/hugo-theme-stack">Stack</a>作为我博客的主题，说实话第一眼还是配图吸引了我，果然人就是肤浅的视觉动物。分类、搜索、评论、无框架，在满足了我基本的需求之后，还能提供相对充裕的自定制空间。毕竟框架虽然强大，但却封装了技术细节，想弄懂又需要花费不少学习成本，好吧，懒癌晚期，if it works, don’t fix it?</p>
-</div>
-<div id="blogdown" class="section level1">
-<h1>blogdown</h1>
-<p>在这想稍微详细说一下blogdown。众所周知，hugo是一款以Go开发的强大的静态网站生成器，那为什么还要开发blogdown呢？很简单，因为hugo暂时还没有完成对.Rmd的支持，但rmarkdown直接在网页中同时包含代码和生成的结果实在是太香了（其实还有更多的功能，但我就是个视觉动物）。Yihui因此开发了blogdown（有技术真的可以为所欲为吗），实现了对.Rmd的解析渲染，并且能实现bookdown、rmarkdown的绝大部分特性（yihui怎么又是你，难道这就是推荐式算法吗，信息茧房恐怖如斯），加上<a href="https://shiny.rstudio.com/">Shiny</a>应该可以实现交互式的页面应用，很可惜我暂时还不懂shiny咋用。这里又要吹一波RSstudio了，Addins提供了包括新增post和插入image等操作的快捷方式。</p>
-<div class="figure">
-<img src="/post/2021-01-06-establish-a-website-by-r-blogdown/index.en_files/addins.png" style="width:50.0%" alt="" />
-<p class="caption">blogdown addins</p>
-</div>
-<p>（啊，为什么本地加载图片会失败啊，哦，原来是生成路径的问题，rmd要加入/post/）</p>
-<p>总之，<code>blogdown:::serve_site()</code>建立本地服务器用于预览，<code>blogdown::build_site()</code>后能得到一个默认为<strong>public</strong>的文件夹，里面就包含了博客所需要的所有文件。接下来就是github新建仓库, git commit, push remote一气呵成，很快啊。注意要在public文件夹建立仓库，因为建站所需的文件只有这些。</p>
-</div>
+    <h1 id="google-analytics">Google Analytics</h1>
+<p>Followed <a class="link" href="https://gohugo.io/templates/internal#google-analytics"  target="_blank" rel="noopener"
+    >Hugo documents</a>, I&rsquo;d like to implement some extra features on my blog site such as <abbr title="google analytics">GA</abbr>. Here are description about GA:</p>
+<blockquote>
+<p>Google Analytics lets you measure your advertising ROI as well as track your Flash, video, and social networking sites and applications.</p>
+</blockquote>
+<h2 id="registration">Registration</h2>
+<p>Google for Google Analytics，<a class="link" href="https://analytics.google.com/"  target="_blank" rel="noopener"
+    >login in</a> using personal google account<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. Add an user then create an application of website, it would generate a tracking id after choose <strong>data stream</strong>. GA also provide some javascript code adding at the excatly <code>&lt;head&gt;</code> tag of website to achieve analytics. It sounds terrible to add js code on each page of a website, fortunately, Hugo provide an internal template for GA. What I need to do is only to add a <code>{{ template &quot;_internal/google_analytics_async.html&quot; . }}</code> shortcode at custom head file and provide tracking id in configuration file. Remarkably, I choose a asynchronous version, which might have a better performance, at least I hope so.</p>
+<h2 id="analytics">Analytics</h2>
+<p>It looks like GA has been an integrated marketing platform, however, I gravitate toward feature of visitor statistics such as visitors' numbers<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> and locations.</p>
+<p>example: <figure style="flex-grow: 215; flex-basis: 516px">
+		<a href="/p/google-analytics-and-seo/images/google_analytic.png" data-size="1901x884"><img src="/p/google-analytics-and-seo/images/google_analytic.png"
+				srcset="/p/google-analytics-and-seo/images/google_analytic_hue8f6761bdddb8db483171fc90720aa7c_526020_480x0_resize_box_2.png 480w, /p/google-analytics-and-seo/images/google_analytic_hue8f6761bdddb8db483171fc90720aa7c_526020_1024x0_resize_box_2.png 1024w"
+				width="1901"
+				height="884"
+				loading="lazy"
+				alt="google analytic map">
+		</a>
+		
+		<figcaption>google analytic map</figcaption>
+		
+	</figure></p>
+<h1 id="seo">SEO</h1>
+<p>During learning website technology, I gradually recognized the importance of <abbr title="search engine optimalization">SEO</abbr>. Hugo or theme provides a default <code>sitemap.xml</code> file. In principle, search engines like <em>Google</em> behave like a spider but it won&rsquo;t go inside a deep hierarchy. Sitemap create a more flatten structure of the whole website consequently a better SEO performance.</p>
+<h2 id="google-search-console">Google Search Console</h2>
+<p><a class="link" href="https://developers.google.com/search"  target="_blank" rel="noopener"
+    >Google Search Console</a>:</p>
+<blockquote>
+<p>Google Search Central, formerly Google Webmasters, is here to help the right people view your content with resources to make your website discoverable to Google Search.</p>
+</blockquote>
+<p>It&rsquo;s easy to verify website ownership using method <strong>Google Analytics</strong> on that page. Next, log in <strong>Google Search Console</strong>, after validate web information it will generate a txt token. Switching to DNS provider, add a <strong>txt</strong> type DNS record whose value must be the token above. Besides, server name can be <code>@</code>, might other names are also valid?</p>
+<p>In site map index, sitemap can be provided by an URL, of course the sitemap.xml path for my site.</p>
+<h1 id="words-in-the-end">Words in the End</h1>
+<p>In fact, as a personal tech blog, SEO seems not indispensable, maybe I&rsquo;m so idle at home?</p>
+<p>next plan:</p>
+<ul>
+<li><input disabled="" type="checkbox"> baidu SEO</li>
+<li><input disabled="" type="checkbox"> indexes catalog</li>
+<li><input disabled="" type="checkbox"> words statistic</li>
+</ul>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>thats what called <em>ecology</em>? <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>a sadly news, it seems no one browse this website except myself. <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
 
 </section>
 
@@ -256,9 +287,9 @@
     
     <section class="article-tags">
         
-            <a href="/tags/hugo/">hugo</a>
+            <a href="/tags/ga/">GA</a>
         
-            <a href="/tags/blogdown/">blogdown</a>
+            <a href="/tags/seo/">SEO</a>
         
     </section>
 
@@ -289,18 +320,6 @@
                 
                     
 <article class="">
-    <a href="/p/google-analytics-and-seo/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Google Analytics And SEO</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
     <a href="/p/auto-pull-using-webhook-and-nodejs/">
         
         
@@ -319,6 +338,18 @@
 
         <div class="article-details">
             <h2 class="article-title">Deploy A Static Blog Site</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/establish-a-website-by-r-blogdown/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Establish A Website With R Blogdown</h2>
         </div>
     </a>
 </article>

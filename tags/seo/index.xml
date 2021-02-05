@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SEO on A Technical Blog</title>
+    <link>https://www.gagua.xyz/tags/seo/</link>
+    <description>Recent content in SEO on A Technical Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 05 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/tags/seo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Google Analytics And SEO</title>
+      <link>https://www.gagua.xyz/p/google-analytics-and-seo/</link>
+      <pubDate>Fri, 05 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.gagua.xyz/p/google-analytics-and-seo/</guid>
+      <description>Google Analytics Followed Hugo documents, I&amp;rsquo;d like to implement some extra features on my blog site such as GA. Here are description about GA:
+ Google Analytics lets you measure your advertising ROI as well as track your Flash, video, and social networking sites and applications.
+ Registration Google for Google Analytics，login in using personal google account1. Add an user then create an application of website, it would generate a tracking id after choose data stream.</description>
+    </item>
+    
+  </channel>
+</rss>
