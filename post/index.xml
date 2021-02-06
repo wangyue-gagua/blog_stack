@@ -62,15 +62,14 @@ install nodejs I first tried conda search node then find the version of nodejs i
       <pubDate>Thu, 07 Jan 2021 00:00:00 +0000</pubDate>
       
       <guid>https://www.gagua.xyz/p/deploy-a-static-blog-site/</guid>
-      <description>Deployment网站如果只运行在local host那还叫啥网站啊，如果部署在一个具有公网ip的服务器，这样就能实现让几乎所有人都能通过浏览器访问自己的网站。blogdown文档中提供了多种部署方案，但在这里选择部署至一台自己的vps上。
+      <description>Deployment此时需要:WebServerinstall nginxdomain name and httpshttpswebhookgithookgithub webhook405Deployment网站如果只运行在local host那还叫啥网站啊，如果部署在一个具有公网ip的服务器，这样就能实现让几乎所有人都能通过浏览器访问自己的网站。blogdown文档中提供了多种部署方案，但在这里选择部署至一台自己的vps上。
 此时需要:能通过互联网访问的主机（host）一台网站（博客）的文件client——浏览器server——webServer云计算，大数据如此火热的现在，主机现在显然不是问题。博客文件已经通过blogdown生成，浏览器也成为了大部分人的应用，接下来就只剩下webServer的问题了。
 WebServerWebServer可以解析HTTP，响应(response)一个请求(request)，通常都是返回一个html文件来让浏览器进行浏览。在这里我选用的是nginx，一款主要由Igor Sysoev在业余时间开发的HTTP和反向代理的服务器。当然还有其他功能，不过我暂时用上的就只有这两个。webserver当然由很多，如Apache等，甚至可以用python等自己实现一个，但是为什么我会选择nginx？主要是因为nginx内存占用小，并发高（这一点对于我暂时没有什么用处），有着优秀的静态处理性能（关键）。这对于私人博客这样一个静态网站来说，是完美的选择。
 install nginxnginx可以通过源码安装，但是在linux上想到的，果然还是yum优先。抱歉，由权限是真的可以为所欲为。
 yum install nginx......no package nginx available？居然显示仓库中没有nginx，怎么可能？很好，我选择万能的conda。安装好miniconda之后，conda search nginx，果然有，完成下载。在浏览器访问主机的ip地址，出现以下的界面：
 nginx 安装成功
 注意，conda 安装的nginx将根目录设置的是conda所在目录。
-git clone xxx.git从远程仓库git clone得到静态网页项目文件，之后的就是设置nginx的配置文件了。nginx -t直接找到配置文件位置
-# nginx -tnginx: the configuration file $path/to/conf/file syntax is oknginx: configuration file $path/to/conf/file test is successfulvi $path/to/conf/file...include sites.d/*.conf;nginx将sites.d/*.conf中的所有文件包含在了配置文件中。在sites.d/下新建一个.conf文件，</description>
+git clone xxx.git从远程仓库git clone得到静态网页项目文件，之后的就是设置nginx的配置文件了。nginx -t直接找到配置文件位置</description>
     </item>
     
     <item>
@@ -79,7 +78,7 @@ git clone xxx.git从远程仓库git clone得到静态网页项目文件，之�
       <pubDate>Wed, 06 Jan 2021 00:00:00 +0000</pubDate>
       
       <guid>https://www.gagua.xyz/p/establish-a-website-by-r-blogdown/</guid>
-      <description>缘起Blogdown是由Yihui Xie基于Hugo编写的一个R包，用于便捷地进行静态网站的构建。由于Yihui大神和RStudio团队的不懈努力，一个充满活力的R语言社区得以构建。加上之前偶然尝试了Yihui的另一个R包Rmarkdown，不由惊为天人。恰巧最近也学了点web相关的知识，html,css,native js等等，于是就产生了构建一个博客的想法，顺便也能记录一些在探索中遇到的技术问题，分享数据可视化的一些美图，实践《计算机网络，自顶而下方法》，《深入理解计算机系统》。
+      <description>缘起选型blogdown缘起Blogdown是由Yihui Xie基于Hugo编写的一个R包，用于便捷地进行静态网站的构建。由于Yihui大神和RStudio团队的不懈努力，一个充满活力的R语言社区得以构建。加上之前偶然尝试了Yihui的另一个R包Rmarkdown，不由惊为天人。恰巧最近也学了点web相关的知识，html,css,native js等等，于是就产生了构建一个博客的想法，顺便也能记录一些在探索中遇到的技术问题，分享数据可视化的一些美图，实践《计算机网络，自顶而下方法》，《深入理解计算机系统》。
 选型Blogdown下载直接install.packages()，在比较新版本的RStudio IDE中，New Project中可以直接选择website using blogdown，RStudio会自动下载新版本的Hugo，在此也能选择主题(theme github)。在Hugo官网中纠结了很久，最后还是选了Stack作为我博客的主题，说实话第一眼还是配图吸引了我，果然人就是肤浅的视觉动物。分类、搜索、评论、无框架，在满足了我基本的需求之后，还能提供相对充裕的自定制空间。毕竟框架虽然强大，但却封装了技术细节，想弄懂又需要花费不少学习成本，好吧，懒癌晚期，if it works, don’t fix it?
 blogdown在这想稍微详细说一下blogdown。众所周知，hugo是一款以Go开发的强大的静态网站生成器，那为什么还要开发blogdown呢？很简单，因为hugo暂时还没有完成对.Rmd的支持，但rmarkdown直接在网页中同时包含代码和生成的结果实在是太香了（其实还有更多的功能，但我就是个视觉动物）。Yihui因此开发了blogdown（有技术真的可以为所欲为吗），实现了对.Rmd的解析渲染，并且能实现bookdown、rmarkdown的绝大部分特性（yihui怎么又是你，难道这就是推荐式算法吗，信息茧房恐怖如斯），加上Shiny应该可以实现交互式的页面应用，很可惜我暂时还不懂shiny咋用。这里又要吹一波RSstudio了，Addins提供了包括新增post和插入image等操作的快捷方式。
 blogdown addins
