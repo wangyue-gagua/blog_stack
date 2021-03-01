@@ -6,7 +6,16 @@
     <description>Recent content in R on A Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/categories/r/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 01 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/categories/r/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Methods for Checking Source Code of R Functions</title>
+      <link>https://www.gagua.xyz/p/methods-for-checking-source-code-of-r-functions/</link>
+      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.gagua.xyz/p/methods-for-checking-source-code-of-r-functions/</guid>
+      <description>R function’s source codeRecently, I found some problems programming with R, and I habitually pressed F1 for document. However, this document can’t figure out these problems. So I finally decided to check the source code of these functions. To be honest, it’s a little bit struggle for me to find source code since some R functions were written by C. Besides, the object oriented programming such as S3 generics make things weird.</description>
+    </item>
+    
     <item>
       <title>Integrated R Workflow</title>
       <link>https://www.gagua.xyz/p/integrated-r-workflow/</link>

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-us">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='A brief guide to setup KaTeX'><title>Math Typesetting</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='log some experience about finding source code of R functions'><title>Methods for Checking Source Code of R Functions</title>
 
-<link rel='canonical' href='https://www.gagua.xyz/p/math-typesetting/'>
+<link rel='canonical' href='https://www.gagua.xyz/p/methods-for-checking-source-code-of-r-functions/'>
 
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Math Typesetting'>
-<meta property='og:description' content='A brief guide to setup KaTeX'>
-<meta property='og:url' content='https://www.gagua.xyz/p/math-typesetting/'>
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Methods for Checking Source Code of R Functions'>
+<meta property='og:description' content='log some experience about finding source code of R functions'>
+<meta property='og:url' content='https://www.gagua.xyz/p/methods-for-checking-source-code-of-r-functions/'>
 <meta property='og:site_name' content='A Technical Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2019-03-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2019-03-08T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="Math Typesetting">
-<meta name="twitter:description" content="A brief guide to setup KaTeX">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Source Code' /><meta property='article:published_time' content='2021-03-01T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-03-01T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Methods for Checking Source Code of R Functions">
+<meta name="twitter:description" content="log some experience about finding source code of R functions">
     <link rel="shortcut icon" href="img/favicon.ico" />
 
 <script type="application/javascript">
@@ -199,14 +199,22 @@ if (!doNotTrack) {
 
     <div class="article-details">
     
+    <header class="article-category">
+        
+            <a href="/categories/r/" >
+                R
+            </a>
+        
+    </header>
+    
 
     <h2 class="article-title">
-        <a href="/p/math-typesetting/">Math Typesetting</a>
+        <a href="/p/methods-for-checking-source-code-of-r-functions/">Methods for Checking Source Code of R Functions</a>
     </h2>
 
     
     <h3 class="article-subtitle">
-        A brief guide to setup KaTeX
+        log some experience about finding source code of R functions
     </h3>
     <footer class="article-time">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -217,41 +225,181 @@ if (!doNotTrack) {
 
 
 
-        <time class="article-time--published">Mar 08, 2019</time>
+        <time class="article-time--published">Mar 01, 2021</time>
     </footer></div>
 </header>
 
     <section class="article-content">
-    <p>Mathematical notation in a Hugo project can be enabled by using third party JavaScript libraries.</p>
-<p>In this example we will be using <a class="link" href="https://katex.org/"  target="_blank" rel="noopener"
-    >KaTeX</a></p>
-<ul>
-<li>Create a partial under <code>/layouts/partials/math.html</code></li>
-<li>Within this partial reference the <a class="link" href="https://katex.org/docs/autorender.html"  target="_blank" rel="noopener"
-    >Auto-render Extension</a> or host these scripts locally.</li>
-<li>Include the partial in your templates like so:</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">{{</span> <span class="k">if</span> or .Params.math .Site.Params.math <span class="o">}}</span>
-<span class="o">{{</span> partial <span class="s2">&#34;math.html&#34;</span> . <span class="o">}}</span>
-<span class="o">{{</span> end <span class="o">}}</span>
-</code></pre></div><ul>
-<li>To enable KaTex globally set the parameter <code>math</code> to <code>true</code> in a project&rsquo;s configuration</li>
-<li>To enable KaTex on a per page basis include the parameter <code>math: true</code> in content files</li>
-</ul>
-<p><strong>Note:</strong> Use the online reference of <a class="link" href="https://katex.org/docs/supported.html"  target="_blank" rel="noopener"
-    >Supported TeX Functions</a></p>
+    
 
-<h3 id="examples">Examples</h3>
 
-<p>Block math:
-$$
-\varphi = 1+\frac{1} {1+\frac{1} {1+\frac{1} {1+\cdots} } }
-$$</p>
+<div id="r-functions-source-code" class="section level1">
+<h1>R function’s source code</h1>
+<p>Recently, I found some problems programming with R, and I habitually pressed <kbd>F1</kbd> for document. However, this document can’t figure out these problems. So I finally decided to check the source code of these functions. To be honest, it’s a little bit struggle for me to find source code since some R functions were written by C. Besides, the object oriented programming such as S3 generics make things weird.</p>
+<p>Thanks for some answers on <a href="https://www.zhihu.com/question/24586822">Zhihu platform</a>, these problems have been solved already.</p>
+<div id="print-funtions-name-immediately" class="section level2">
+<h2>print funtion’s name immediately</h2>
+<pre class="r"><code>rank</code></pre>
+<pre><code>## function (x, na.last = TRUE, ties.method = c(&quot;average&quot;, &quot;first&quot;, 
+##     &quot;last&quot;, &quot;random&quot;, &quot;max&quot;, &quot;min&quot;)) 
+## {
+##     nas &lt;- is.na(x)
+##     nm &lt;- names(x)
+##     ties.method &lt;- match.arg(ties.method)
+##     if (is.factor(x)) 
+##         x &lt;- as.integer(x)
+##     x &lt;- x[!nas]
+##     y &lt;- switch(ties.method, average = , min = , max = .Internal(rank(x, 
+##         length(x), ties.method)), first = sort.list(sort.list(x)), 
+##         last = sort.list(rev.default(sort.list(x, decreasing = TRUE))), 
+##         random = sort.list(order(x, stats::runif(sum(!nas)))))
+##     if (!is.na(na.last) &amp;&amp; any(nas)) {
+##         yy &lt;- NA
+##         NAkeep &lt;- (na.last == &quot;keep&quot;)
+##         if (NAkeep || na.last) {
+##             yy[!nas] &lt;- y
+##             if (!NAkeep) 
+##                 yy[nas] &lt;- (length(y) + 1L):length(yy)
+##         }
+##         else {
+##             len &lt;- sum(nas)
+##             yy[!nas] &lt;- y + len
+##             yy[nas] &lt;- seq_len(len)
+##         }
+##         y &lt;- yy
+##         names(y) &lt;- nm
+##     }
+##     else names(y) &lt;- nm[!nas]
+##     y
+## }
+## &lt;bytecode: 0x00000000138d6818&gt;
+## &lt;environment: namespace:base&gt;</code></pre>
+</div>
+<div id="call-edit" class="section level2">
+<h2>call edit()</h2>
+<pre class="r"><code>edit(rank)</code></pre>
+<pre><code>## function (x, na.last = TRUE, ties.method = c(&quot;average&quot;, &quot;first&quot;, 
+##     &quot;last&quot;, &quot;random&quot;, &quot;max&quot;, &quot;min&quot;)) 
+## {
+##     nas &lt;- is.na(x)
+##     nm &lt;- names(x)
+##     ties.method &lt;- match.arg(ties.method)
+##     if (is.factor(x)) 
+##         x &lt;- as.integer(x)
+##     x &lt;- x[!nas]
+##     y &lt;- switch(ties.method, average = , min = , max = .Internal(rank(x, 
+##         length(x), ties.method)), first = sort.list(sort.list(x)), 
+##         last = sort.list(rev.default(sort.list(x, decreasing = TRUE))), 
+##         random = sort.list(order(x, stats::runif(sum(!nas)))))
+##     if (!is.na(na.last) &amp;&amp; any(nas)) {
+##         yy &lt;- NA
+##         NAkeep &lt;- (na.last == &quot;keep&quot;)
+##         if (NAkeep || na.last) {
+##             yy[!nas] &lt;- y
+##             if (!NAkeep) 
+##                 yy[nas] &lt;- (length(y) + 1L):length(yy)
+##         }
+##         else {
+##             len &lt;- sum(nas)
+##             yy[!nas] &lt;- y + len
+##             yy[nas] &lt;- seq_len(len)
+##         }
+##         y &lt;- yy
+##         names(y) &lt;- nm
+##     }
+##     else names(y) &lt;- nm[!nas]
+##     y
+## }
+## &lt;environment: namespace:base&gt;</code></pre>
+</div>
+<div id="call-page" class="section level2">
+<h2>call page()</h2>
+<p>It’s similar to ‘edit()’ but open on a new page</p>
+<pre class="r"><code>page(rank)</code></pre>
+</div>
+<div id="methods" class="section level2">
+<h2>Methods()</h2>
+<p>For some functions, approaches above will not work.</p>
+<pre class="r"><code>mean</code></pre>
+<pre><code>## function (x, ...) 
+## UseMethod(&quot;mean&quot;)
+## &lt;bytecode: 0x0000000015b73ce8&gt;
+## &lt;environment: namespace:base&gt;</code></pre>
+<p>Obviously, <code>mean</code> function behave as a <strong>class</strong> like other programming languages. It will call different methods depend on the type of it’s parameters. So that we need call <code>methods()</code> for specific object.</p>
+<pre class="r"><code>methods(mean)</code></pre>
+<pre><code>## [1] mean.Date     mean.default  mean.difftime mean.POSIXct  mean.POSIXlt 
+## [6] mean.quosure*
+## see &#39;?methods&#39; for accessing help and source code</code></pre>
+<pre class="r"><code>mean.default</code></pre>
+<pre><code>## function (x, trim = 0, na.rm = FALSE, ...) 
+## {
+##     if (!is.numeric(x) &amp;&amp; !is.complex(x) &amp;&amp; !is.logical(x)) {
+##         warning(&quot;argument is not numeric or logical: returning NA&quot;)
+##         return(NA_real_)
+##     }
+##     if (na.rm) 
+##         x &lt;- x[!is.na(x)]
+##     if (!is.numeric(trim) || length(trim) != 1L) 
+##         stop(&quot;&#39;trim&#39; must be numeric of length one&quot;)
+##     n &lt;- length(x)
+##     if (trim &gt; 0 &amp;&amp; n) {
+##         if (is.complex(x)) 
+##             stop(&quot;trimmed means are not defined for complex data&quot;)
+##         if (anyNA(x)) 
+##             return(NA_real_)
+##         if (trim &gt;= 0.5) 
+##             return(stats::median(x, na.rm = FALSE))
+##         lo &lt;- floor(n * trim) + 1
+##         hi &lt;- n + 1 - lo
+##         x &lt;- sort.int(x, partial = unique(c(lo, hi)))[lo:hi]
+##     }
+##     .Internal(mean(x))
+## }
+## &lt;bytecode: 0x0000000015304888&gt;
+## &lt;environment: namespace:base&gt;</code></pre>
+</div>
+<div id="getanywhere" class="section level2">
+<h2>getAnywhere</h2>
+<p>Sometimes there is function with asterisk, which can’t be looking for with <code>methods()</code> because it’s written by C lang.</p>
+<pre class="r"><code>methods(mean)</code></pre>
+<pre><code>## [1] mean.Date     mean.default  mean.difftime mean.POSIXct  mean.POSIXlt 
+## [6] mean.quosure*
+## see &#39;?methods&#39; for accessing help and source code</code></pre>
+<pre class="r"><code>try(methods(mean.quosure))</code></pre>
+<pre><code>## Error in methods(mean.quosure) : object &#39;mean.quosure&#39; not found</code></pre>
+<p><code>getAnywhere</code> is needed.</p>
+<pre class="r"><code>getAnywhere(mean.quosure)</code></pre>
+<pre><code>## A single object matching &#39;mean.quosure&#39; was found
+## It was found in the following places
+##   registered S3 method for mean from namespace rlang
+##   namespace:rlang
+## with value
+## 
+## function (x, na.rm = TRUE, ...) 
+## {
+##     abort_quosure_op(&quot;Summary&quot;, &quot;mean&quot;)
+## }
+## &lt;bytecode: 0x0000000013251bc0&gt;
+## &lt;environment: namespace:rlang&gt;</code></pre>
+</div>
+<div id="cran" class="section level2">
+<h2>CRAN</h2>
+<p>comprehensive R archive network: <a href="https://cran.r-project.org/">CRAN</a></p>
+<p>choose <em>packages</em> on the left side and download packages including such function, and source code is available.</p>
+</div>
+</div>
+
 </section>
 
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/tags/source-code/">Source Code</a>
+        
+    </section>
+
 
     
     <section class="article-copyright">
@@ -268,32 +416,41 @@ $$</p>
     </footer>
 
     
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
-    integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"
-    integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4"
-    crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
-    integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"
-    onload="StackLaTeX()"></script>
-
-<script>
-    function StackLaTeX() {
-        renderMathInElement(document.querySelector(`.article-content`), {
-            delimiters: [
-                { left: "$$", right: "$$", display: true },
-                { left: "$", right: "$", display: false },
-                { left: "\\(", right: "\\)", display: false },
-                { left: "\\[", right: "\\]", display: true }
-            ]
-        });
-    }
-</script>
-    
 </article>
 
     <aside class="related-contents--wrapper">
     
+    
+        <h2 class="section-title">Related contents</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/integrated-r-workflow/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Integrated R Workflow</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/hello-r-markdown/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Hello R Markdown</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
     
 </aside>
 
@@ -392,6 +549,10 @@ $$</p>
             
 
 
+
+<div class="my-right-sidebar">
+    
+</div>
 
 
 

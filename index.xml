@@ -6,7 +6,173 @@
         <description>Recent content on A Technical Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Fri, 05 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 01 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Methods for Checking Source Code of R Functions</title>
+        <link>https://www.gagua.xyz/p/methods-for-checking-source-code-of-r-functions/</link>
+        <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.gagua.xyz/p/methods-for-checking-source-code-of-r-functions/</guid>
+        <description>
+
+
+&lt;div id=&#34;r-functions-source-code&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;R function’s source code&lt;/h1&gt;
+&lt;p&gt;Recently, I found some problems programming with R, and I habitually pressed &lt;kbd&gt;F1&lt;/kbd&gt; for document. However, this document can’t figure out these problems. So I finally decided to check the source code of these functions. To be honest, it’s a little bit struggle for me to find source code since some R functions were written by C. Besides, the object oriented programming such as S3 generics make things weird.&lt;/p&gt;
+&lt;p&gt;Thanks for some answers on &lt;a href=&#34;https://www.zhihu.com/question/24586822&#34;&gt;Zhihu platform&lt;/a&gt;, these problems have been solved already.&lt;/p&gt;
+&lt;div id=&#34;print-funtions-name-immediately&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;print funtion’s name immediately&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rank&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## function (x, na.last = TRUE, ties.method = c(&amp;quot;average&amp;quot;, &amp;quot;first&amp;quot;, 
+##     &amp;quot;last&amp;quot;, &amp;quot;random&amp;quot;, &amp;quot;max&amp;quot;, &amp;quot;min&amp;quot;)) 
+## {
+##     nas &amp;lt;- is.na(x)
+##     nm &amp;lt;- names(x)
+##     ties.method &amp;lt;- match.arg(ties.method)
+##     if (is.factor(x)) 
+##         x &amp;lt;- as.integer(x)
+##     x &amp;lt;- x[!nas]
+##     y &amp;lt;- switch(ties.method, average = , min = , max = .Internal(rank(x, 
+##         length(x), ties.method)), first = sort.list(sort.list(x)), 
+##         last = sort.list(rev.default(sort.list(x, decreasing = TRUE))), 
+##         random = sort.list(order(x, stats::runif(sum(!nas)))))
+##     if (!is.na(na.last) &amp;amp;&amp;amp; any(nas)) {
+##         yy &amp;lt;- NA
+##         NAkeep &amp;lt;- (na.last == &amp;quot;keep&amp;quot;)
+##         if (NAkeep || na.last) {
+##             yy[!nas] &amp;lt;- y
+##             if (!NAkeep) 
+##                 yy[nas] &amp;lt;- (length(y) + 1L):length(yy)
+##         }
+##         else {
+##             len &amp;lt;- sum(nas)
+##             yy[!nas] &amp;lt;- y + len
+##             yy[nas] &amp;lt;- seq_len(len)
+##         }
+##         y &amp;lt;- yy
+##         names(y) &amp;lt;- nm
+##     }
+##     else names(y) &amp;lt;- nm[!nas]
+##     y
+## }
+## &amp;lt;bytecode: 0x00000000138d6818&amp;gt;
+## &amp;lt;environment: namespace:base&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;call-edit&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;call edit()&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;edit(rank)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## function (x, na.last = TRUE, ties.method = c(&amp;quot;average&amp;quot;, &amp;quot;first&amp;quot;, 
+##     &amp;quot;last&amp;quot;, &amp;quot;random&amp;quot;, &amp;quot;max&amp;quot;, &amp;quot;min&amp;quot;)) 
+## {
+##     nas &amp;lt;- is.na(x)
+##     nm &amp;lt;- names(x)
+##     ties.method &amp;lt;- match.arg(ties.method)
+##     if (is.factor(x)) 
+##         x &amp;lt;- as.integer(x)
+##     x &amp;lt;- x[!nas]
+##     y &amp;lt;- switch(ties.method, average = , min = , max = .Internal(rank(x, 
+##         length(x), ties.method)), first = sort.list(sort.list(x)), 
+##         last = sort.list(rev.default(sort.list(x, decreasing = TRUE))), 
+##         random = sort.list(order(x, stats::runif(sum(!nas)))))
+##     if (!is.na(na.last) &amp;amp;&amp;amp; any(nas)) {
+##         yy &amp;lt;- NA
+##         NAkeep &amp;lt;- (na.last == &amp;quot;keep&amp;quot;)
+##         if (NAkeep || na.last) {
+##             yy[!nas] &amp;lt;- y
+##             if (!NAkeep) 
+##                 yy[nas] &amp;lt;- (length(y) + 1L):length(yy)
+##         }
+##         else {
+##             len &amp;lt;- sum(nas)
+##             yy[!nas] &amp;lt;- y + len
+##             yy[nas] &amp;lt;- seq_len(len)
+##         }
+##         y &amp;lt;- yy
+##         names(y) &amp;lt;- nm
+##     }
+##     else names(y) &amp;lt;- nm[!nas]
+##     y
+## }
+## &amp;lt;environment: namespace:base&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;call-page&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;call page()&lt;/h2&gt;
+&lt;p&gt;It’s similar to ‘edit()’ but open on a new page&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;page(rank)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;methods&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Methods()&lt;/h2&gt;
+&lt;p&gt;For some functions, approaches above will not work.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## function (x, ...) 
+## UseMethod(&amp;quot;mean&amp;quot;)
+## &amp;lt;bytecode: 0x0000000015b73ce8&amp;gt;
+## &amp;lt;environment: namespace:base&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Obviously, &lt;code&gt;mean&lt;/code&gt; function behave as a &lt;strong&gt;class&lt;/strong&gt; like other programming languages. It will call different methods depend on the type of it’s parameters. So that we need call &lt;code&gt;methods()&lt;/code&gt; for specific object.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;methods(mean)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] mean.Date     mean.default  mean.difftime mean.POSIXct  mean.POSIXlt 
+## [6] mean.quosure*
+## see &amp;#39;?methods&amp;#39; for accessing help and source code&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean.default&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## function (x, trim = 0, na.rm = FALSE, ...) 
+## {
+##     if (!is.numeric(x) &amp;amp;&amp;amp; !is.complex(x) &amp;amp;&amp;amp; !is.logical(x)) {
+##         warning(&amp;quot;argument is not numeric or logical: returning NA&amp;quot;)
+##         return(NA_real_)
+##     }
+##     if (na.rm) 
+##         x &amp;lt;- x[!is.na(x)]
+##     if (!is.numeric(trim) || length(trim) != 1L) 
+##         stop(&amp;quot;&amp;#39;trim&amp;#39; must be numeric of length one&amp;quot;)
+##     n &amp;lt;- length(x)
+##     if (trim &amp;gt; 0 &amp;amp;&amp;amp; n) {
+##         if (is.complex(x)) 
+##             stop(&amp;quot;trimmed means are not defined for complex data&amp;quot;)
+##         if (anyNA(x)) 
+##             return(NA_real_)
+##         if (trim &amp;gt;= 0.5) 
+##             return(stats::median(x, na.rm = FALSE))
+##         lo &amp;lt;- floor(n * trim) + 1
+##         hi &amp;lt;- n + 1 - lo
+##         x &amp;lt;- sort.int(x, partial = unique(c(lo, hi)))[lo:hi]
+##     }
+##     .Internal(mean(x))
+## }
+## &amp;lt;bytecode: 0x0000000015304888&amp;gt;
+## &amp;lt;environment: namespace:base&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;getanywhere&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;getAnywhere&lt;/h2&gt;
+&lt;p&gt;Sometimes there is function with asterisk, which can’t be looking for with &lt;code&gt;methods()&lt;/code&gt; because it’s written by C lang.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;methods(mean)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] mean.Date     mean.default  mean.difftime mean.POSIXct  mean.POSIXlt 
+## [6] mean.quosure*
+## see &amp;#39;?methods&amp;#39; for accessing help and source code&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;try(methods(mean.quosure))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Error in methods(mean.quosure) : object &amp;#39;mean.quosure&amp;#39; not found&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;getAnywhere&lt;/code&gt; is needed.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;getAnywhere(mean.quosure)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## A single object matching &amp;#39;mean.quosure&amp;#39; was found
+## It was found in the following places
+##   registered S3 method for mean from namespace rlang
+##   namespace:rlang
+## with value
+## 
+## function (x, na.rm = TRUE, ...) 
+## {
+##     abort_quosure_op(&amp;quot;Summary&amp;quot;, &amp;quot;mean&amp;quot;)
+## }
+## &amp;lt;bytecode: 0x0000000013251bc0&amp;gt;
+## &amp;lt;environment: namespace:rlang&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;cran&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;CRAN&lt;/h2&gt;
+&lt;p&gt;comprehensive R archive network: &lt;a href=&#34;https://cran.r-project.org/&#34;&gt;CRAN&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;choose &lt;em&gt;packages&lt;/em&gt; on the left side and download packages including such function, and source code is available.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
         <title>Google Analytics And SEO</title>
         <link>https://www.gagua.xyz/p/google-analytics-and-seo/</link>
         <pubDate>Fri, 05 Feb 2021 00:00:00 +0000</pubDate>
@@ -785,7 +951,7 @@ return 301 https://$host$request_uri;
 
 &lt;p&gt;Block math:
 $$
-\varphi = 1+\frac{1} {1+\frac{1} {1+\frac{1} {1+\cdots} } } 
+\varphi = 1+\frac{1} {1+\frac{1} {1+\frac{1} {1+\cdots} } }
 $$&lt;/p&gt;</description>
         </item>
         <item>
