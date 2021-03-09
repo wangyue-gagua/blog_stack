@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-us">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='presentation and simple website build by Shiny'><title>Integrated R Workflow</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='记录安装FASTX-Toolkit中遇到的小问题'><title>Fastx-Toolkit Install</title>
 
-<link rel='canonical' href='https://www.gagua.xyz/p/integrated-r-workflow/'>
+<link rel='canonical' href='https://www.gagua.xyz/p/fastx-toolkit-install/'>
 
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Integrated R Workflow'>
-<meta property='og:description' content='presentation and simple website build by Shiny'>
-<meta property='og:url' content='https://www.gagua.xyz/p/integrated-r-workflow/'>
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Fastx-Toolkit Install'>
+<meta property='og:description' content='记录安装FASTX-Toolkit中遇到的小问题'>
+<meta property='og:url' content='https://www.gagua.xyz/p/fastx-toolkit-install/'>
 <meta property='og:site_name' content='A Technical Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Shiny' /><meta property='article:published_time' content='2021-01-19T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-01-19T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="Integrated R Workflow">
-<meta name="twitter:description" content="presentation and simple website build by Shiny">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='C' /><meta property='article:published_time' content='2021-03-09T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-03-09T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Fastx-Toolkit Install">
+<meta name="twitter:description" content="记录安装FASTX-Toolkit中遇到的小问题">
     <link rel="shortcut icon" href="img/favicon.ico" />
 
 <script type="application/javascript">
@@ -201,10 +201,6 @@ if (!doNotTrack) {
     
     <header class="article-category">
         
-            <a href="/categories/r/" >
-                R
-            </a>
-        
             <a href="/categories/misc/" >
                 Misc
             </a>
@@ -213,12 +209,12 @@ if (!doNotTrack) {
     
 
     <h2 class="article-title">
-        <a href="/p/integrated-r-workflow/">Integrated R Workflow</a>
+        <a href="/p/fastx-toolkit-install/">Fastx-Toolkit Install</a>
     </h2>
 
     
     <h3 class="article-subtitle">
-        presentation and simple website build by Shiny
+        记录安装FASTX-Toolkit中遇到的小问题
     </h3>
     <footer class="article-time">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -229,47 +225,76 @@ if (!doNotTrack) {
 
 
 
-        <time class="article-time--published">Jan 19, 2021</time>
+        <time class="article-time--published">Mar 09, 2021</time>
     </footer></div>
 </header>
 
     <section class="article-content">
-    <h2 id="shiny">Shiny</h2>
-<p>最近导师觉得找我要图太麻烦了，就让我弄一个网页版的工具来进行可视化。虽然这事之前确实没做过，不过对Shiny还算有所耳闻，初步想了一下，感觉不算什么太难的事情，就答应了<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>。</p>
-<p><a class="link" href="https://shiny.rstudio.com/"  target="_blank" rel="noopener"
-    >Shiny</a>也算是Rstudio强推的一个通过R构建交互式网页的工具，不得不感慨一下Rstudio为R的社区生态做出的卓越贡献。Shiny教学看起来还挺完善的，视频版的教学据说内容更丰富，不过说实话这连个自动字幕都没有，就纯练英语听力，实在是太为难我了，果断选择<em>Written</em>版。初学者的教学就7章，花了大概两个小时看完了，顺便跟着做了点练习，教学只提炼出了最基础的部分，不过也覆盖了生成一个完整的网页APP需要的部分，循序渐进好上手，有R的基础整这个还是挺方便的。</p>
-<h3 id="deploy">Deploy</h3>
-<p>本来想放在自己的服务器的，不过想到我服务器可怜的体量，还是别再开一个web server了。而且，<a class="link" href="https://www.shinyapps.io/"  target="_blank" rel="noopener"
-    >shinyapps</a>可以再Rstudio IDE中自动推送啥的，还不用再去github上整个仓库，感觉自家的工具链是真的爽，难怪有这么多人喜欢用苹果，用的不是手机，而是生态啊。</p>
-<p><a class="link" href="https://gagua.shinyapps.io/circadian/"  target="_blank" rel="noopener"
-    >my Shiny app</a>不过感觉在用户体验方面还是有点点小问题，初次打开太慢了，这个也确实没办法，毕竟shiny启动需要加载一堆R包，还得加载数据，而且感觉这种网页不方便进行<abbr title="content distribution network">CDN</abbr>。麻烦的在于，免费版的shinyapp服务每个月只有25小时的活跃(active)时间，也就是，当一段时间无人访问时，服务器会自动进入休眠状态，那再打开网页，就又相当于一次服务重启，相当耗时。如果有思路却要等网页加载，总感觉有点耽误科研效率，嘛，反正我也有本地数据，如果实在觉得性能不行，那就去申请经费整个会员吧。</p>
-<h2 id="r-workflow">R workflow</h2>
-<p>想想最近的分析工作，大概就是：</p>
+    <h1 id="fastx-toolkit">FASTX-Toolkit</h1>
+<p>记录一下<a class="link" href="http://hannonlab.cshl.edu/fastx_toolkit/download.html"  target="_blank" rel="noopener"
+    >FASTX-Toolkit</a> 安装时遇到的坑。作为一款FASTQ/A短reads预处理软件，它也算是有些年头了，所以在现在的安装环境下难免会存在一些问题，这里就把遇到的这些问题记录下来，以示后人。</p>
+<h2 id="install-libgtextutils">install libgtextutils</h2>
+<p>这是一款用C和C++编写的软件，所以安装流程中可以选择通过源码安装，也可以选择通过预编译的二进制包安装。可以在<a class="link" href="http://hannonlab.cshl.edu/fastx_toolkit/download.html"  target="_blank" rel="noopener"
+    >冷泉港hannonlab实验室</a>的官网上找到，不过预编译的二进制包只存在0.0.13的旧版本，所以这里选择通过源码安装。</p>
+<p>值得注意的是，FASTX-Toolkit<strong>依赖</strong>于libgtextutils，所以选择先安装libgtextutils。解压后查看<strong>README</strong>文件，然后转到<strong>INSTALL</strong>文件查看安装方法，不过通常来说，C系列的软件安装都是三步走，即：</p>
 <ol>
-<li>数据挖掘<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>
-在linux服务器上完成对性能需求较大的mapping, counting等步骤。这步通过基于python编写的<a class="link" href="https://snakemake.readthedocs.io/en/stable/"  target="_blank" rel="noopener"
-    >snakemake</a>完成了流程大体上的自动化。以后最好加个multiqc完成质量控制的可视化。</li>
-<li>可视化。在本地服务器上利用R完成数据挖掘和可视化，Rstudio是真的好用，就是字体有点难受，不好区分大小写，视觉上感觉还是更喜欢vscode。之前一直是用Rscript完成分析，这次换成是Rmarkdown。其实本质上没有区别，不过Rmarkdown可以自动生成pptx等展示文档，避免了汇报工作时还得手动插图片的尴尬<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>。</li>
-<li>分享交互。用网页应用进行分享交互可能是最流行的方式了。这里采用Shiny，毕竟基于R，减少了学习成本，部署构建都挺快的，现在也还能满足需求。</li>
+<li><code>./configure</code></li>
+<li><code>make</code></li>
+<li><code>make install</code></li>
 </ol>
-<p>通过这样一个R-&gt;Rmarkdown-&gt;Shiny的工作流，大体上实现了数据分析工作的自动化，最后的结果看起来也挺美观的。在这里再次感谢R的开源社区提供的强大工具，使得我甚至还有时间在这写blog。然而，还是存在平台的割裂，没有完全实现自动化。如果能把2、3步也放在远程服务器上解决就好了。这里存在的问题就是没钱<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>，好吧，如果能购买Rstudio的社区版就好了。这样就可以通过snakemake继续调用R脚本，打包成一个完整的流程，不过以后这流程也不一定能再走一遍了。还好，snakemake似乎支持模块化，下次把流程优化重构成一个个单独的模组吧。如果能实现，就可以避免下载文件等一堆繁琐的事情了，也不用非得待在实验室，真好啊真好啊😉。</p>
-<section class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1" role="doc-endnote">
-<p><strong>朕意已决</strong>？ <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2" role="doc-endnote">
-<p>markdown怎么实现<strong>description list</strong>呀？ <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:3" role="doc-endnote">
-<p>就是感觉对ppt的支持还不够完整，当然很大可能是我太菜了。 <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:4" role="doc-endnote">
-<p>人唯一的病就是穷病？ <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</section>
+<p>对于有些软件来说可能略有不同，比如需要加上<code>make test</code>检验安装是否完成，对于使用Cmake安装的，等以后有空再来研究吧。这里有个问题就是这种方法安装的软件怎么卸载呢？直接把安装文件夹给删了，总觉的很简单粗暴，但是也没见到有<code>make uninstall</code>这个指令呀。</p>
+<h3 id="prefix">Prefix</h3>
+<p>这里就很奇怪了，明明INSTALL文件夹里提到了默认文件夹可以用以上三个步骤，但我重复之后会发现奇奇怪怪的Bug，显示安装已经完成但是却找不到<em>libgtextutils</em>这个依赖项。后面才发现，手动指定文件夹路径就不会有问题了。<code>./configure --prefix=/PATH/TO/INSTALL</code>，值得注意的是，这里的路径要采用绝对路径，不能用<code>~</code>指代根目录，说实话让人觉得非常不习惯。</p>
+<h3 id="heading"></h3>
+<p>在<strong>make</strong>步骤中，会发生一些麻烦，比如说</p>
+<pre><code>text_line_reader.cpp
+...
+return input_stream() ;
+</code></pre><p>这个是由于GCC版本导致的问题，如果大于4.8.5就会报错</p>
+<pre><code>gcc --version
+x86_64-conda-linux-gnu-gcc (crosstool-NG 1.24.0.133_b0863d8_dirty) 7.5.0
+Copyright (C) 2017 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+</code></pre><p>可以考虑降低GCC版本到要求或者修改<code>text_line_reader.cpp</code>文件</p>
+<pre><code>return input_stream.good() ;
+</code></pre><h2 id="install-fastx-toolkit">install FASTX-Toolkit</h2>
+<p>安装完成后用同样的方法尝试安装FASTX-Toolkit，这时会在第一步生成配置文件时就发现问题，不过这个很容易解决，按照错误提示:</p>
+<pre><code>vi ~/.bashrc
+export PKG_CONFIG_PATH=/PATH/TO/INSTALL/lib/pkgconfig
+source ~/.bashrc
+</code></pre><p>出现这种问题的原因是，找不到包的依赖路径，不过这个我很不理解为什么安装的时候不会自动添加进环境变量。手动配置总感觉很麻烦。</p>
+<p>继续安装，这时候又会在make阶段发生问题</p>
+<pre><code>fasta_formatter.cpp: In function 'void parse_command_line(int, char**)':
+fasta_formatter.cpp:105:9: error: this statement may fall through [-Werror=implicit-fallthrough=]
+    usage();
+    ~~~~~^~
+fasta_formatter.cpp:107:3: note: here
+   case 'i':
+   ^~~~
+cc1plus: all warnings being treated as errors
+make[3]: *** [Makefile:425: fasta_formatter.o] Error 1
+make[3]: Leaving directory '/home/wangy/fastx_toolkit-0.0.14/src/fasta_formatter'
+make[2]: *** [Makefile:373: all-recursive] Error 1
+make[2]: Leaving directory '/home/wangy/fastx_toolkit-0.0.14/src'
+make[1]: *** [Makefile:411: all-recursive] Error 1
+make[1]: Leaving directory '/home/wangy/fastx_toolkit-0.0.14'
+make: *** [Makefile:342: all] Error 2
+</code></pre><p>这个报错甚至可以在github中的一个<a class="link" href="https://github.com/agordon/fastx_toolkit/issues/21"  target="_blank" rel="noopener"
+    >issue</a>中看到。解决方法也很简单：</p>
+<pre><code>cd /fastx_toolkit-0.0.14/src/fasta_formatter
+vi fasta_formatter.cpp
+
+switch(opt) {
+                case 'h':
+                        usage();
+                        exit(0);//添加一行
+
+</code></pre><p>看起来这个步骤是提供命令行中<code>-h</code>的帮助提示，不过需要添加<code>exit(0)</code>返回，可能是bug又或是就版本的C支持这种语句？不懂。</p>
+<h3 id="path">PATH</h3>
+<p>最后，为了使用方便，最好还是把安装目录下的bin文件夹添加到$PATH环境变量</p>
+<pre><code>export PATH=/PATH/TO/INSTALL/fastx_toolkit-0.0.14/bin
+</code></pre><p>可以愉快的使用啦！</p>
 
 </section>
 
@@ -278,7 +303,7 @@ if (!doNotTrack) {
     
     <section class="article-tags">
         
-            <a href="/tags/shiny/">Shiny</a>
+            <a href="/tags/c/">C</a>
         
     </section>
 
@@ -309,30 +334,6 @@ if (!doNotTrack) {
                 
                     
 <article class="">
-    <a href="/p/fastx-toolkit-install/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Fastx-Toolkit Install</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/p/methods-for-checking-source-code-of-r-functions/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Methods for Checking Source Code of R Functions</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
     <a href="/p/index.zh-cn/">
         
         
@@ -345,12 +346,12 @@ if (!doNotTrack) {
                 
                     
 <article class="">
-    <a href="/p/hello-r-markdown/">
+    <a href="/p/integrated-r-workflow/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Hello R Markdown</h2>
+            <h2 class="article-title">Integrated R Workflow</h2>
         </div>
     </a>
 </article>

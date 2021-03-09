@@ -6,7 +6,80 @@
         <description>Recent content on A Technical Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 01 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 09 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Fastx-Toolkit Install</title>
+        <link>https://www.gagua.xyz/p/fastx-toolkit-install/</link>
+        <pubDate>Tue, 09 Mar 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.gagua.xyz/p/fastx-toolkit-install/</guid>
+        <description>&lt;h1 id=&#34;fastx-toolkit&#34;&gt;FASTX-Toolkit&lt;/h1&gt;
+&lt;p&gt;记录一下&lt;a class=&#34;link&#34; href=&#34;http://hannonlab.cshl.edu/fastx_toolkit/download.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;FASTX-Toolkit&lt;/a&gt; 安装时遇到的坑。作为一款FASTQ/A短reads预处理软件，它也算是有些年头了，所以在现在的安装环境下难免会存在一些问题，这里就把遇到的这些问题记录下来，以示后人。&lt;/p&gt;
+&lt;h2 id=&#34;install-libgtextutils&#34;&gt;install libgtextutils&lt;/h2&gt;
+&lt;p&gt;这是一款用C和C++编写的软件，所以安装流程中可以选择通过源码安装，也可以选择通过预编译的二进制包安装。可以在&lt;a class=&#34;link&#34; href=&#34;http://hannonlab.cshl.edu/fastx_toolkit/download.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;冷泉港hannonlab实验室&lt;/a&gt;的官网上找到，不过预编译的二进制包只存在0.0.13的旧版本，所以这里选择通过源码安装。&lt;/p&gt;
+&lt;p&gt;值得注意的是，FASTX-Toolkit&lt;strong&gt;依赖&lt;/strong&gt;于libgtextutils，所以选择先安装libgtextutils。解压后查看&lt;strong&gt;README&lt;/strong&gt;文件，然后转到&lt;strong&gt;INSTALL&lt;/strong&gt;文件查看安装方法，不过通常来说，C系列的软件安装都是三步走，即：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;./configure&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;make&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;make install&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;对于有些软件来说可能略有不同，比如需要加上&lt;code&gt;make test&lt;/code&gt;检验安装是否完成，对于使用Cmake安装的，等以后有空再来研究吧。这里有个问题就是这种方法安装的软件怎么卸载呢？直接把安装文件夹给删了，总觉的很简单粗暴，但是也没见到有&lt;code&gt;make uninstall&lt;/code&gt;这个指令呀。&lt;/p&gt;
+&lt;h3 id=&#34;prefix&#34;&gt;Prefix&lt;/h3&gt;
+&lt;p&gt;这里就很奇怪了，明明INSTALL文件夹里提到了默认文件夹可以用以上三个步骤，但我重复之后会发现奇奇怪怪的Bug，显示安装已经完成但是却找不到&lt;em&gt;libgtextutils&lt;/em&gt;这个依赖项。后面才发现，手动指定文件夹路径就不会有问题了。&lt;code&gt;./configure --prefix=/PATH/TO/INSTALL&lt;/code&gt;，值得注意的是，这里的路径要采用绝对路径，不能用&lt;code&gt;~&lt;/code&gt;指代根目录，说实话让人觉得非常不习惯。&lt;/p&gt;
+&lt;h3 id=&#34;heading&#34;&gt;&lt;/h3&gt;
+&lt;p&gt;在&lt;strong&gt;make&lt;/strong&gt;步骤中，会发生一些麻烦，比如说&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;text_line_reader.cpp
+...
+return input_stream() ;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这个是由于GCC版本导致的问题，如果大于4.8.5就会报错&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcc --version
+x86_64-conda-linux-gnu-gcc (crosstool-NG 1.24.0.133_b0863d8_dirty) 7.5.0
+Copyright (C) 2017 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;可以考虑降低GCC版本到要求或者修改&lt;code&gt;text_line_reader.cpp&lt;/code&gt;文件&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;return input_stream.good() ;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;install-fastx-toolkit&#34;&gt;install FASTX-Toolkit&lt;/h2&gt;
+&lt;p&gt;安装完成后用同样的方法尝试安装FASTX-Toolkit，这时会在第一步生成配置文件时就发现问题，不过这个很容易解决，按照错误提示:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vi ~/.bashrc
+export PKG_CONFIG_PATH=/PATH/TO/INSTALL/lib/pkgconfig
+source ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;出现这种问题的原因是，找不到包的依赖路径，不过这个我很不理解为什么安装的时候不会自动添加进环境变量。手动配置总感觉很麻烦。&lt;/p&gt;
+&lt;p&gt;继续安装，这时候又会在make阶段发生问题&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;fasta_formatter.cpp: In function &#39;void parse_command_line(int, char**)&#39;:
+fasta_formatter.cpp:105:9: error: this statement may fall through [-Werror=implicit-fallthrough=]
+    usage();
+    ~~~~~^~
+fasta_formatter.cpp:107:3: note: here
+   case &#39;i&#39;:
+   ^~~~
+cc1plus: all warnings being treated as errors
+make[3]: *** [Makefile:425: fasta_formatter.o] Error 1
+make[3]: Leaving directory &#39;/home/wangy/fastx_toolkit-0.0.14/src/fasta_formatter&#39;
+make[2]: *** [Makefile:373: all-recursive] Error 1
+make[2]: Leaving directory &#39;/home/wangy/fastx_toolkit-0.0.14/src&#39;
+make[1]: *** [Makefile:411: all-recursive] Error 1
+make[1]: Leaving directory &#39;/home/wangy/fastx_toolkit-0.0.14&#39;
+make: *** [Makefile:342: all] Error 2
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这个报错甚至可以在github中的一个&lt;a class=&#34;link&#34; href=&#34;https://github.com/agordon/fastx_toolkit/issues/21&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;issue&lt;/a&gt;中看到。解决方法也很简单：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd /fastx_toolkit-0.0.14/src/fasta_formatter
+vi fasta_formatter.cpp
+
+switch(opt) {
+                case &#39;h&#39;:
+                        usage();
+                        exit(0);//添加一行
+
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;看起来这个步骤是提供命令行中&lt;code&gt;-h&lt;/code&gt;的帮助提示，不过需要添加&lt;code&gt;exit(0)&lt;/code&gt;返回，可能是bug又或是就版本的C支持这种语句？不懂。&lt;/p&gt;
+&lt;h3 id=&#34;path&#34;&gt;PATH&lt;/h3&gt;
+&lt;p&gt;最后，为了使用方便，最好还是把安装目录下的bin文件夹添加到$PATH环境变量&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export PATH=/PATH/TO/INSTALL/fastx_toolkit-0.0.14/bin
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;可以愉快的使用啦！&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Methods for Checking Source Code of R Functions</title>
         <link>https://www.gagua.xyz/p/methods-for-checking-source-code-of-r-functions/</link>
         <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>

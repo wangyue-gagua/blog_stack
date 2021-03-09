@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C on A Technical Blog</title>
+    <link>https://www.gagua.xyz/tags/c/</link>
+    <description>Recent content in C on A Technical Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 09 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/tags/c/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fastx-Toolkit Install</title>
+      <link>https://www.gagua.xyz/p/fastx-toolkit-install/</link>
+      <pubDate>Tue, 09 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.gagua.xyz/p/fastx-toolkit-install/</guid>
+      <description>FASTX-Toolkit 记录一下FASTX-Toolkit 安装时遇到的坑。作为一款FASTQ/A短reads预处理软件，它也算是有些年头了，所以在现在的安装环境下难免会存在一些问题，这里就把遇到的这些问题记录下来，以示后人。
+install libgtextutils 这是一款用C和C++编写的软件，所以安装流程中可以选择通过源码安装，也可以选择通过预编译的二进制包安装。可以在冷泉港hannonlab实验室的官网上找到，不过预编译的二进制包只存在0.0.13的旧版本，所以这里选择通过源码安装。
+值得注意的是，FASTX-Toolkit依赖于libgtextutils，所以选择先安装libgtextutils。解压后查看README文件，然后转到INSTALL文件查看安装方法，不过通常来说，C系列的软件安装都是三步走，即：
+ ./configure make make install  对于有些软件来说可能略有不同，比如需要加上make test检验安装是否完成，对于使用Cmake安装的，等以后有空再来研究吧。这里有个问题就是这种方法安装的软件怎么卸载呢？直接把安装文件夹给删了，总觉的很简单粗暴，但是也没见到有make uninstall这个指令呀。
+Prefix 这里就很奇怪了，明明INSTALL文件夹里提到了默认文件夹可以用以上三个步骤，但我重复之后会发现奇奇怪怪的Bug，显示安装已经完成但是却找不到libgtextutils这个依赖项。后面才发现，手动指定文件夹路径就不会有问题了。./configure --prefix=/PATH/TO/INSTALL，值得注意的是，这里的路径要采用绝对路径，不能用~指代根目录，说实话让人觉得非常不习惯。
+ 在make步骤中，会发生一些麻烦，比如说
+text_line_reader.cpp...return input_stream() ;这个是由于GCC版本导致的问题，如果大于4.8.5就会报错
+gcc --versionx86_64-conda-linux-gnu-gcc (crosstool-NG 1.24.0.133_b0863d8_dirty) 7.5.0Copyright (C) 2017 Free Software Foundation, Inc.This is free software; see the source for copying conditions. There is NOwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.可以考虑降低GCC版本到要求或者修改text_line_reader.cpp文件
+return input_stream.good() ;install FASTX-Toolkit 安装完成后用同样的方法尝试安装FASTX-Toolkit，这时会在第一步生成配置文件时就发现问题，不过这个很容易解决，按照错误提示:</description>
+    </item>
+    
+  </channel>
+</rss>
