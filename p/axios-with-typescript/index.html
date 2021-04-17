@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-us">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='add google analytic feature and google SEO'><title>Google Analytics And SEO</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Axios interceptor and typescript'><title>Axios With Typescript</title>
 
-<link rel='canonical' href='https://www.gagua.xyz/p/google-analytics-and-seo/'>
+<link rel='canonical' href='https://www.gagua.xyz/p/axios-with-typescript/'>
 
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Google Analytics And SEO'>
-<meta property='og:description' content='add google analytic feature and google SEO'>
-<meta property='og:url' content='https://www.gagua.xyz/p/google-analytics-and-seo/'>
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Axios With Typescript'>
+<meta property='og:description' content='Axios interceptor and typescript'>
+<meta property='og:url' content='https://www.gagua.xyz/p/axios-with-typescript/'>
 <meta property='og:site_name' content='A Technical Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='GA' /><meta property='article:tag' content='SEO' /><meta property='article:published_time' content='2021-02-05T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-02-05T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="Google Analytics And SEO">
-<meta name="twitter:description" content="add google analytic feature and google SEO">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Typescript' /><meta property='article:published_time' content='2021-04-17T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-04-17T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Axios With Typescript">
+<meta name="twitter:description" content="Axios interceptor and typescript">
     <link rel="shortcut icon" href="img/favicon.ico" />
 
 <script type="application/javascript">
@@ -209,12 +209,12 @@ if (!doNotTrack) {
     
 
     <h2 class="article-title">
-        <a href="/p/google-analytics-and-seo/">Google Analytics And SEO</a>
+        <a href="/p/axios-with-typescript/">Axios With Typescript</a>
     </h2>
 
     
     <h3 class="article-subtitle">
-        add google analytic feature and google SEO
+        Axios interceptor and typescript
     </h3>
     <footer class="article-time">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -225,63 +225,35 @@ if (!doNotTrack) {
 
 
 
-        <time class="article-time--published">Feb 05, 2021</time>
+        <time class="article-time--published">Apr 17, 2021</time>
     </footer></div>
 </header>
 
     <section class="article-content">
-    <h1 id="google-analytics">Google Analytics</h1>
-<p>Followed <a class="link" href="https://gohugo.io/templates/internal#google-analytics"  target="_blank" rel="noopener"
-    >Hugo documents</a>, I&rsquo;d like to implement some extra features on my blog site such as <abbr title="google analytics">GA</abbr>. Here are description about GA:</p>
-<blockquote>
-<p>Google Analytics lets you measure your advertising ROI as well as track your Flash, video, and social networking sites and applications.</p>
-</blockquote>
-<h2 id="registration">Registration</h2>
-<p>Google for Google Analytics，<a class="link" href="https://analytics.google.com/"  target="_blank" rel="noopener"
-    >login in</a> using personal google account<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. Add an user then create an application of website, it would generate a tracking id after choose <strong>data stream</strong>. GA also provide some javascript code adding below the <code>&lt;head&gt;</code> tag of website exactly to achieve analytics. It sounds terrible to add js code on each page of a website, fortunately, Hugo provide an internal template for GA. What I need to do is only to add a <code>{{ template &quot;_internal/google_analytics_async.html&quot; . }}</code> shortcode at custom head file and provide tracking id in configuration file. Remarkably, I choose a asynchronous version, which might have a better performance, at least I hope so.</p>
-<h2 id="analytics">Analytics</h2>
-<p>It looks like GA has been an integrated marketing platform, however, I gravitate toward feature of visitor statistics such as visitors' numbers<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> and locations.</p>
-<p>example: <figure style="flex-grow: 215; flex-basis: 516px">
-		<a href="/p/google-analytics-and-seo/images/google_analytic.png" data-size="1901x884"><img src="/p/google-analytics-and-seo/images/google_analytic.png"
-				srcset="/p/google-analytics-and-seo/images/google_analytic_hue8f6761bdddb8db483171fc90720aa7c_526020_480x0_resize_box_2.png 480w, /p/google-analytics-and-seo/images/google_analytic_hue8f6761bdddb8db483171fc90720aa7c_526020_1024x0_resize_box_2.png 1024w"
-				width="1901"
-				height="884"
-				loading="lazy"
-				alt="google analytic map">
-		</a>
-		
-		<figcaption>google analytic map</figcaption>
-		
-	</figure></p>
-<h1 id="seo">SEO</h1>
-<p>During learning website technology, I gradually recognized the importance of <abbr title="search engine optimalization">SEO</abbr>. Hugo or theme provides a default <code>sitemap.xml</code> file. In principle, search engines like <em>Google</em> behave like a spider but it won&rsquo;t go inside a deep hierarchy. Sitemap create a more flatten structure of the whole website consequently a better SEO performance.</p>
-<h2 id="google-search-console">Google Search Console</h2>
-<p><a class="link" href="https://developers.google.com/search"  target="_blank" rel="noopener"
-    >Google Search Console</a>:</p>
-<blockquote>
-<p>Google Search Central, formerly Google Webmasters, is here to help the right people view your content with resources to make your website discoverable to Google Search.</p>
-</blockquote>
-<p>It&rsquo;s easy to verify website ownership using method <strong>Google Analytics</strong> on that page. Next, log in <strong>Google Search Console</strong>, after validate web information it will generate a txt token. Switching to DNS provider, add a <strong>txt</strong> type DNS record whose value must be the token above. Besides, server name can be <code>@</code>, might other names are also valid?</p>
-<p>In site map index, sitemap can be provided by an URL, of course the sitemap.xml path for my site.</p>
-<h1 id="words-in-the-end">Words in the End</h1>
-<p>In fact, as a personal tech blog, SEO seems not indispensable, maybe I&rsquo;m so idle at home?</p>
-<p>next plan:</p>
-<ul>
-<li><input disabled="" type="checkbox"> baidu SEO</li>
-<li><input disabled="" type="checkbox"> indexes catalog</li>
-<li><input disabled="" type="checkbox"> words statistic</li>
-</ul>
-<section class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1" role="doc-endnote">
-<p>thats what called <em>ecology</em>? <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2" role="doc-endnote">
-<p>a sadly news, it seems no one browse this website except myself. <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</section>
+    <h1 id="refactor-with-typescript">Refactor With Typescript</h1>
+<p>最近跟着b站上的视频用vue构建了一个移动版的商城项目，算是初步了解了vue全家桶的用法。不过这个项目是用javascript写的，所以就想用typescript重构，也算是一次项目实践，不用写ui只用写逻辑应该比较轻松。</p>
+<h2 id="typescripthttpswwwtypescriptlangorg"><a class="link" href="https://www.typescriptlang.org/"  target="_blank" rel="noopener"
+    >Typescript</a></h2>
+<p>javascript由于某些历史原因，设计上存在着一些糟粕，并且作为弱类型语言常常由于隐式的类型转换而产生一些运行时的bug，在编写过程中难以发觉，错误发生后也难以定位(debug)。没有类型系统的话，对于编辑器来说也不够友好，跳转和定义并不方便。因此微软开发了typescript，完全兼容javascript，没有限定运行时，完全开源，可以将其当作带有类型系统的js。最妙的是ts和js并非是二元对立的选择，而是渐进式的。</p>
+<h2 id="axioshttpsgithubcomaxiosaxios"><a class="link" href="https://github.com/axios/axios"  target="_blank" rel="noopener"
+    >Axios</a></h2>
+<p>Axios是一个http请求库，是<abbr title="xmlHttpRequest">XHR</abbr>的Promise实现，将其封装后用于网络请求。</p>
+<h3 id="axiosresponse">AxiosResponse</h3>
+<p>尽管TS已经有官方类型，但是在用TS重构项目时还是发生了问题，
+主要在于封装过程中采用响应拦截器封装request请求，使得直接返回了<code>res=&gt;res.data</code>，而在使用封装完毕的请求方法时，</p>
+<pre><code class="language-{typescript}" data-lang="{typescript}">Promise().then(res:AxiosResponse&lt;data&gt; =&gt; {
+  res.filed
+})
+</code></pre><p>会发现TS报错字段<code>filed</code>不存在，这是因为<em>AxiosResponse</em>的类型定义中并不存在这个字段，而必须在<em>data</em>字段中寻找。而如果采用另外的一种方式，即：</p>
+<pre><code class="language-{typescript}" data-lang="{typescript}">Promise().then(res:AxiosResponse&lt;data&gt; =&gt; {
+  res.data.filed
+})
+</code></pre><p>却会发现尽管字段不报错，但是TS报错<code>AxiosResponse&lt;data&gt;无法赋值给AxiosResponse&lt;any&gt;</code>。
+google搜索后找到了Axios官方库中的一个<a class="link" href="https://github.com/axios/axios/issues/1510"  target="_blank" rel="noopener"
+    >issue</a>，不过个人能力有限，就算看完了这个也没想到什么好的解决方法。因为AxiosResponse的<strong>data</strong>字段本身没有给出特定的接口，而是采用泛型来实现，想在函数调用之前就设定接口，但是这样修改的也只是AxiosPromise，似乎无法在根本上解决问题。</p>
+<h3 id="discard-interceptor">Discard interceptor</h3>
+<p>最后我决定妥协，即放弃在拦截器中采用<code>res=&gt;res.data</code>的方式，而在调用获取数据后额外加上data字段。虽然麻烦了一点点但是毕竟问题解决了。
+仔细一想，其实封装时在拦截器直接返回data似乎并不是一个良好的方式，毕竟返回数据其实还有config，header等重要的元数据信息，如果贸然把这些数据丢弃，对于类型安全并不可靠，也不利于之后功能的扩展。</p>
 
 </section>
 
@@ -290,9 +262,7 @@ if (!doNotTrack) {
     
     <section class="article-tags">
         
-            <a href="/tags/ga/">GA</a>
-        
-            <a href="/tags/seo/">SEO</a>
+            <a href="/tags/typescript/">Typescript</a>
         
     </section>
 
@@ -323,24 +293,24 @@ if (!doNotTrack) {
                 
                     
 <article class="">
-    <a href="/p/axios-with-typescript/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Axios With Typescript</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
     <a href="/p/vue-routerthe-front-end-routing/">
         
         
 
         <div class="article-details">
             <h2 class="article-title">Vue Router:The Front-End Routing </h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/google-analytics-and-seo/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Google Analytics And SEO</h2>
         </div>
     </a>
 </article>

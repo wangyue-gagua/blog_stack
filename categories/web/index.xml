@@ -6,7 +6,22 @@
     <description>Recent content in web on A Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/categories/web/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/categories/web/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Axios With Typescript</title>
+      <link>https://www.gagua.xyz/p/axios-with-typescript/</link>
+      <pubDate>Sat, 17 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.gagua.xyz/p/axios-with-typescript/</guid>
+      <description>Refactor With Typescript 最近跟着b站上的视频用vue构建了一个移动版的商城项目，算是初步了解了vue全家桶的用法。不过这个项目是用javascript写的，所以就想用typescript重构，也算是一次项目实践，不用写ui只用写逻辑应该比较轻松。
+Typescript javascript由于某些历史原因，设计上存在着一些糟粕，并且作为弱类型语言常常由于隐式的类型转换而产生一些运行时的bug，在编写过程中难以发觉，错误发生后也难以定位(debug)。没有类型系统的话，对于编辑器来说也不够友好，跳转和定义并不方便。因此微软开发了typescript，完全兼容javascript，没有限定运行时，完全开源，可以将其当作带有类型系统的js。最妙的是ts和js并非是二元对立的选择，而是渐进式的。
+Axios Axios是一个http请求库，是XHR的Promise实现，将其封装后用于网络请求。
+AxiosResponse 尽管TS已经有官方类型，但是在用TS重构项目时还是发生了问题， 主要在于封装过程中采用响应拦截器封装request请求，使得直接返回了res=&amp;gt;res.data，而在使用封装完毕的请求方法时，
+Promise().then(res:AxiosResponse&amp;lt;data&amp;gt; =&amp;gt; {res.filed})会发现TS报错字段filed不存在，这是因为AxiosResponse的类型定义中并不存在这个字段，而必须在data字段中寻找。而如果采用另外的一种方式，即：
+Promise().then(res:AxiosResponse&amp;lt;data&amp;gt; =&amp;gt; {res.data.filed})却会发现尽管字段不报错，但是TS报错AxiosResponse&amp;lt;data&amp;gt;无法赋值给AxiosResponse&amp;lt;any&amp;gt;。 google搜索后找到了Axios官方库中的一个issue，不过个人能力有限，就算看完了这个也没想到什么好的解决方法。因为AxiosResponse的data字段本身没有给出特定的接口，而是采用泛型来实现，想在函数调用之前就设定接口，但是这样修改的也只是AxiosPromise，似乎无法在根本上解决问题。
+Discard interceptor 最后我决定妥协，即放弃在拦截器中采用res=&amp;gt;res.data的方式，而在调用获取数据后额外加上data字段。虽然麻烦了一点点但是毕竟问题解决了。 仔细一想，其实封装时在拦截器直接返回data似乎并不是一个良好的方式，毕竟返回数据其实还有config，header等重要的元数据信息，如果贸然把这些数据丢弃，对于类型安全并不可靠，也不利于之后功能的扩展。</description>
+    </item>
+    
     <item>
       <title>Vue Router:The Front-End Routing </title>
       <link>https://www.gagua.xyz/p/vue-routerthe-front-end-routing/</link>
