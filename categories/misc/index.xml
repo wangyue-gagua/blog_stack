@@ -6,7 +6,18 @@
     <description>Recent content in Misc on A Technical Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/categories/misc/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 11 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/categories/misc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Uvicorn ANSI Color Error In Pycharm Terminal</title>
+      <link>https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/</link>
+      <pubDate>Tue, 11 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/</guid>
+      <description>Origin Recently I&amp;rsquo;m learning FastAPI wanting to develop a JSON API based backend server which using Uvicorn as ASGI server. Previously I usually used VSCode to writing python script, but this time I&amp;rsquo;d like to build a slightly bigger project so I turned to Pycharm to build FastAPI application.
+Uvicorn Uvicorn is a lightning-fast ASGI server implementation, using uvloop and httptools.
+ERROR When I ran FastAPI application with uvicorn.exe sql_app.main:app I got into a weird trouble:</description>
+    </item>
+    
     <item>
       <title>Fastx-Toolkit Install</title>
       <link>https://www.gagua.xyz/p/fastx-toolkit-install/</link>

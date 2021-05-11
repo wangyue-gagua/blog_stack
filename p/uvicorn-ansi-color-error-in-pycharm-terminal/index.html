@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Origin Recently I&amp;rsquo;m learning FastAPI wanting to develop a JSON API based backend server which using Uvicorn as ASGI server. Previously I usually used VSCode to writing python script, but this time I&amp;rsquo;d like to build a slightly bigger project so I turned to Pycharm to build FastAPI application.
+Uvicorn Uvicorn is a lightning-fast ASGI server implementation, using uvloop and httptools.
+ERROR When I ran FastAPI application with uvicorn.exe sql_app.main:app I got into a weird trouble:'><title>Uvicorn ANSI Color Error In Pycharm Terminal</title>
+
+<link rel='canonical' href='https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Uvicorn ANSI Color Error In Pycharm Terminal'>
+<meta property='og:description' content='Origin Recently I&amp;rsquo;m learning FastAPI wanting to develop a JSON API based backend server which using Uvicorn as ASGI server. Previously I usually used VSCode to writing python script, but this time I&amp;rsquo;d like to build a slightly bigger project so I turned to Pycharm to build FastAPI application.
+Uvicorn Uvicorn is a lightning-fast ASGI server implementation, using uvloop and httptools.
+ERROR When I ran FastAPI application with uvicorn.exe sql_app.main:app I got into a weird trouble:'>
+<meta property='og:url' content='https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/'>
+<meta property='og:site_name' content='A Technical Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='python' /><meta property='article:published_time' content='2021-05-11T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-05-11T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Uvicorn ANSI Color Error In Pycharm Terminal">
+<meta name="twitter:description" content="Origin Recently I&amp;rsquo;m learning FastAPI wanting to develop a JSON API based backend server which using Uvicorn as ASGI server. Previously I usually used VSCode to writing python script, but this time I&amp;rsquo;d like to build a slightly bigger project so I turned to Pycharm to build FastAPI application.
+Uvicorn Uvicorn is a lightning-fast ASGI server implementation, using uvloop and httptools.
+ERROR When I ran FastAPI application with uvicorn.exe sql_app.main:app I got into a weird trouble:">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-43X2ZTW7HX', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    </head>
+    <body class="">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.body.dataset.scheme = 'dark';
+        } else {
+            document.body.dataset.scheme = 'light';
+        }
+    })();
+</script><div class="container main-container flex on-phone--column extended article-page with-toolbar">
+            <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header class="site-info">
+        
+            <figure class="site-avatar">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu677977ea8fe1bf1a7b4f18cdbbe66107_44020_300x0_resize_box_2.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+        
+        <h1 class="site-name"><a href="https://www.gagua.xyz">A Technical Blog</a></h1>
+        <h2 class="site-description">log something fantastic, data science , web front end and so on.</h2>
+    </header>
+
+    <ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        
+            <li id="dark-mode-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <span>暗色模式</span>
+            </li>
+        
+    </ol>
+</aside>
+
+            <main class="main full-width">
+    <div id="article-toolbar">
+        <a href="https://www.gagua.xyz" class="back-home">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+            <span>Back</span>
+        </a>
+    </div>
+    
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/misc/" >
+                Misc
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/uvicorn-ansi-color-error-in-pycharm-terminal/">Uvicorn ANSI Color Error In Pycharm Terminal</a>
+    </h2>
+
+    <footer class="article-time">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <time class="article-time--published">May 11, 2021</time>
+    </footer></div>
+</header>
+
+    <section class="article-content">
+    <h1 id="origin">Origin</h1>
+<p>Recently I&rsquo;m learning <a class="link" href="https://fastapi.tiangolo.com/"  target="_blank" rel="noopener"
+    >FastAPI</a> wanting to develop a  JSON API based backend server which using Uvicorn
+as ASGI server. Previously I usually used VSCode to writing python script, but this time I&rsquo;d like to build a slightly bigger project
+so I turned to <a class="link" href="https://www.jetbrains.com/zh-cn/pycharm/"  target="_blank" rel="noopener"
+    >Pycharm</a> to build FastAPI application.</p>
+<h2 id="uvicorn">Uvicorn</h2>
+<p><a class="link" href="https://github.com/encode/uvicorn"  target="_blank" rel="noopener"
+    >Uvicorn</a> is a lightning-fast ASGI server implementation, using uvloop and httptools.</p>
+<h3 id="error">ERROR</h3>
+<p>When I ran FastAPI application with <code>uvicorn.exe sql_app.main:app</code> I got into a weird trouble:</p>
+<pre><code class="language-{shell}" data-lang="{shell}">$ uvicorn.exe sql_app.main:app
+?[32mINFO?[0m:     Started server process [?[36m15204?[0m]
+?[32mINFO?[0m:     Waiting for application startup.
+?[32mINFO?[0m:     Application startup complete.
+?[32mINFO?[0m:     Uvicorn running on ?[1mhttp://127.0.0.1:8000?[0m (Press CTRL+C to quit)
+?[32mINFO?[0m:     Shutting down
+?[32mINFO?[0m:     Waiting for application shutdown.
+?[32mINFO?[0m:     Application shutdown complete.
+?[32mINFO?[0m:     Finished server process [?[36m15204?[0m]
+</code></pre><p>There are some unexpected code in Uvicorn starting log. Then I opened the same folder with VScode, the
+results looks like:</p>
+<blockquote>
+<p><span style="color: green;">INFO:</span>   Started server process [<span style="color: Cyan;">5536</span>]</p>
+</blockquote>
+<p>It makes me feel puzzled, then searched the Pycharm settings about color and terminal but didn&rsquo;t get any result.</p>
+<h3 id="different-shells">Different Shells</h3>
+<p>Maybe I chose the wrong shell for Pycharm so that I tested Different Shells. Importantly, I&rsquo;m using Windows platform.</p>
+<dl>
+<dt><strong>Git-bash.exe</strong>:</dt>
+<dd>render colors correctly but need to open a new window</dd>
+<dt><strong>bin\bash.exe:</strong></dt>
+<dd>render error code in Pycharm terminal</dd>
+<dt><strong>PowerShell</strong>:</dt>
+<dd>render error code in Pycharm terminal</dd>
+</dl>
+<p>Now, I&rsquo;m suspicious of Pycharm terminal. So I opened them independently (out of Pycharm) and run Uvicorn command.</p>
+<p>bash.exe:</p>
+<pre><code class="language-{shell}" data-lang="{shell}">$ uvicorn.exe sql_app.main:app
+[32mINFO[0m:     Started server process [[36m15060[0m]
+[32mINFO[0m:     Waiting for application startup.
+[32mINFO[0m:     Application startup complete.
+[32mINFO[0m:     Uvicorn running on [1mhttp://127.0.0.1:8000[0m (Press CTRL+C to quit)
+</code></pre><p>PowerShell:</p>
+<pre><code class="language-{shell}" data-lang="{shell}">$ uvicorn.exe sql_app.main:app
+[32mINFO[0m:     Started server process [[36m13668[0m]
+[32mINFO[0m:     Waiting for application startup.
+[32mINFO[0m:     Application startup complete.
+[32mINFO[0m:     Uvicorn running on [1mhttp://127.0.0.1:8000[0m (Press CTRL+C to quit)
+</code></pre><p><strong>Git-bash.exe</strong> runs without error code however it&rsquo;s just plain text without colors</p>
+<pre><code class="language-{shell}" data-lang="{shell}">$ uvicorn.exe sql_app.main:app
+INFO:     Started server process [12864]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+</code></pre><h3 id="uvicorns-issue">Uvicorn&rsquo;s Issue</h3>
+<p>After Googled for this kind of strange behavior, I found an <a class="link" href="https://github.com/tiangolo/fastapi/issues/815"  target="_blank" rel="noopener"
+    >issue opened on FastAPI page</a> which is related to <a class="link" href="https://github.com/encode/uvicorn/pull/542"  target="_blank" rel="noopener"
+    >uvicorn&rsquo;s bug</a>.</p>
+<p>That bug seems caused by color escaping error on windows, and <em>euri10</em> created a pull request which add <code>click.clear()</code> on <strong>logging.py</strong> to fix the bug. However, this line disappeared at official Uvicorn repository and the package I downloaded. Despite it actually <em>works</em>, I think modify the package hardcode by myself is not an elegant solution.</p>
+<h2 id="ansi-escape-code">ANSI Escape Code</h2>
+<p>After spending a lot of time searching for that issue, I finally got some clues about it.</p>
+<p>ANSI escape sequences are a standard for in-band signaling to control cursor location, color, font styling, and other options on video text terminals and <strong>terminal emulators</strong>.
+<code>[32mINFO[0m:</code> is equivalent to <code>\e[32mINFO\e[0m</code> which will display <span style="color: green;">INFO</span> on terminal. <code>\e</code> means <em>escaping</em>, <code>[32m</code> means green foreground and <code>[0m</code> reset the escape color code.</p>
+<h3 id="windows-terminalhttpsdocsmicrosoftcomzh-cnwindowsterminalget-started"><a class="link" href="https://docs.microsoft.com/zh-cn/windows/terminal/get-started"  target="_blank" rel="noopener"
+    >Windows Terminal</a></h3>
+<p>Installed Windows terminal at Microsoft store, then I tried launching Uvicorn with windows terminal. To my surprise, <strong>both powershell and gitbash</strong> rendered colorful Uvicorn&rsquo;s starting log on terminal.</p>
+<p><figure style="flex-grow: 368; flex-basis: 884px">
+		<a href="/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/Gitbash_uvicorn.png" data-size="722x196"><img src="/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/Gitbash_uvicorn.png"
+				srcset="/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/Gitbash_uvicorn_hud52419d6d550249d073264309dccc3e4_24068_480x0_resize_box_2.png 480w, /p/uvicorn-ansi-color-error-in-pycharm-terminal/images/Gitbash_uvicorn_hud52419d6d550249d073264309dccc3e4_24068_1024x0_resize_box_2.png 1024w"
+				width="722"
+				height="196"
+				loading="lazy"
+				alt="run Uvicorn with git-bash.exe on windows terminal ">
+		</a>
+		
+		<figcaption>run Uvicorn with git-bash.exe on windows terminal</figcaption>
+		
+	</figure></p>
+<h3 id="strange-behavior">Strange Behavior</h3>
+<p>then I tried running <code>echo -e &quot;\e[37;44;3;1mLYL\e[0m&quot;</code> on different terminal with different shell, this code expected white italic &ldquo;LYL&rdquo; text with blue background looks like: <span style="color: white;font-style: italic; background: blue">LYL<span></p>
+<p>On windows terminal platform print with correct format:
+<figure style="flex-grow: 1174; flex-basis: 2818px">
+		<a href="/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/windows_terminal_gitbash.png" data-size="728x62"><img src="/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/windows_terminal_gitbash.png"
+				srcset="/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/windows_terminal_gitbash_hu9b02bfbabace5483a6895d7cdda2c428_3030_480x0_resize_box_2.png 480w, /p/uvicorn-ansi-color-error-in-pycharm-terminal/images/windows_terminal_gitbash_hu9b02bfbabace5483a6895d7cdda2c428_3030_1024x0_resize_box_2.png 1024w"
+				width="728"
+				height="62"
+				loading="lazy"
+				alt="render escape code on windows terminal">
+		</a>
+		
+		<figcaption>render escape code on windows terminal</figcaption>
+		
+	</figure></p>
+<p>but bash.exe can&rsquo;t render italic text:
+<figure style="flex-grow: 736; flex-basis: 1768px">
+		<a href="/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/bash_alone.png" data-size="339x46"><img src="/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/bash_alone.png"
+				srcset="/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/bash_alone_hubcf7dd4b31479c27d9b3b276f3467630_1133_480x0_resize_box_2.png 480w, /p/uvicorn-ansi-color-error-in-pycharm-terminal/images/bash_alone_hubcf7dd4b31479c27d9b3b276f3467630_1133_1024x0_resize_box_2.png 1024w"
+				width="339"
+				height="46"
+				loading="lazy"
+				alt="bash.exe alone">
+		</a>
+		
+		<figcaption>bash.exe alone</figcaption>
+		
+	</figure></p>
+<p>git-bash.exe have completely correct format, and run with <code>--use-colors</code> parameter has colorful log output:
+<figure style="flex-grow: 362; flex-basis: 870px">
+		<a href="/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/git-bash-use-color.png" data-size="526x145"><img src="/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/git-bash-use-color.png"
+				srcset="/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/git-bash-use-color_hu07c94afd42171bde551223936c7feafa_12147_480x0_resize_box_2.png 480w, /p/uvicorn-ansi-color-error-in-pycharm-terminal/images/git-bash-use-color_hu07c94afd42171bde551223936c7feafa_12147_1024x0_resize_box_2.png 1024w"
+				width="526"
+				height="145"
+				loading="lazy"
+				alt="git-bash with parameter">
+		</a>
+		
+		<figcaption>git-bash with parameter</figcaption>
+		
+	</figure></p>
+<p>And I tried setting Pycharm terminal&rsquo;s shell as <em>git-bash.exe</em> which will have wonderful formatted log, with only one drawback: a seperate window.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Different terminals or terminal emulators have different behaviors, that makes me frustrating, I finally couldn&rsquo;t find a perfect solution about this problem.</p>
+<p><a class="link" href="https://www.jetbrains.com/help/pycharm/terminal-emulator.html"  target="_blank" rel="noopener"
+    >Pycharm integrated terminal </a> as an embedded terminal emulator, it has it&rsquo;s own exclusive manifestation. As a non-ANSI-aware terminal it has intrinsic flaw. VsCode might be a better solution?</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/python/">python</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/fastx-toolkit-install/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Fastx-Toolkit Install</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/index.zh-cn/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">甘雨：梦里韶光</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/integrated-r-workflow/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Integrated R Workflow</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2021 A Technical Blog
+    </section>
+    
+    <section class="powerby">
+        
+            Modified by <a href="https://github.com/wangyue-gagua" alt="github">Gagua</a> <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="2.0.1">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+            </main>
+            
+
+            
+
+
+
+<div class="my-right-sidebar">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#origin">Origin</a>
+      <ul>
+        <li><a href="#uvicorn">Uvicorn</a>
+          <ul>
+            <li><a href="#error">ERROR</a></li>
+            <li><a href="#different-shells">Different Shells</a></li>
+            <li><a href="#uvicorns-issue">Uvicorn&rsquo;s Issue</a></li>
+          </ul>
+        </li>
+        <li><a href="#ansi-escape-code">ANSI Escape Code</a>
+          <ul>
+            <li><a href="#windows-terminalhttpsdocsmicrosoftcomzh-cnwindowsterminalget-started"><a href="https://docs.microsoft.com/zh-cn/windows/terminal/get-started">Windows Terminal</a></a></li>
+            <li><a href="#strange-behavior">Strange Behavior</a></li>
+          </ul>
+        </li>
+        <li><a href="#conclusion">Conclusion</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div>
+
+
+
+
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"
+    integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin="anonymous"></script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

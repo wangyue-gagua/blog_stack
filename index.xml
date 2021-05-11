@@ -6,7 +6,140 @@
         <description>Recent content on A Technical Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 17 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 11 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gagua.xyz/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Uvicorn ANSI Color Error In Pycharm Terminal</title>
+        <link>https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/</link>
+        <pubDate>Tue, 11 May 2021 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/</guid>
+        <description>&lt;h1 id=&#34;origin&#34;&gt;Origin&lt;/h1&gt;
+&lt;p&gt;Recently I&amp;rsquo;m learning &lt;a class=&#34;link&#34; href=&#34;https://fastapi.tiangolo.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;FastAPI&lt;/a&gt; wanting to develop a  JSON API based backend server which using Uvicorn
+as ASGI server. Previously I usually used VSCode to writing python script, but this time I&amp;rsquo;d like to build a slightly bigger project
+so I turned to &lt;a class=&#34;link&#34; href=&#34;https://www.jetbrains.com/zh-cn/pycharm/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Pycharm&lt;/a&gt; to build FastAPI application.&lt;/p&gt;
+&lt;h2 id=&#34;uvicorn&#34;&gt;Uvicorn&lt;/h2&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/encode/uvicorn&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Uvicorn&lt;/a&gt; is a lightning-fast ASGI server implementation, using uvloop and httptools.&lt;/p&gt;
+&lt;h3 id=&#34;error&#34;&gt;ERROR&lt;/h3&gt;
+&lt;p&gt;When I ran FastAPI application with &lt;code&gt;uvicorn.exe sql_app.main:app&lt;/code&gt; I got into a weird trouble:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{shell}&#34; data-lang=&#34;{shell}&#34;&gt;$ uvicorn.exe sql_app.main:app
+?[32mINFO?[0m:     Started server process [?[36m15204?[0m]
+?[32mINFO?[0m:     Waiting for application startup.
+?[32mINFO?[0m:     Application startup complete.
+?[32mINFO?[0m:     Uvicorn running on ?[1mhttp://127.0.0.1:8000?[0m (Press CTRL+C to quit)
+?[32mINFO?[0m:     Shutting down
+?[32mINFO?[0m:     Waiting for application shutdown.
+?[32mINFO?[0m:     Application shutdown complete.
+?[32mINFO?[0m:     Finished server process [?[36m15204?[0m]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;There are some unexpected code in Uvicorn starting log. Then I opened the same folder with VScode, the
+results looks like:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;span style=&#34;color: green;&#34;&gt;INFO:&lt;/span&gt;   Started server process [&lt;span style=&#34;color: Cyan;&#34;&gt;5536&lt;/span&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It makes me feel puzzled, then searched the Pycharm settings about color and terminal but didn&amp;rsquo;t get any result.&lt;/p&gt;
+&lt;h3 id=&#34;different-shells&#34;&gt;Different Shells&lt;/h3&gt;
+&lt;p&gt;Maybe I chose the wrong shell for Pycharm so that I tested Different Shells. Importantly, I&amp;rsquo;m using Windows platform.&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;&lt;strong&gt;Git-bash.exe&lt;/strong&gt;:&lt;/dt&gt;
+&lt;dd&gt;render colors correctly but need to open a new window&lt;/dd&gt;
+&lt;dt&gt;&lt;strong&gt;bin\bash.exe:&lt;/strong&gt;&lt;/dt&gt;
+&lt;dd&gt;render error code in Pycharm terminal&lt;/dd&gt;
+&lt;dt&gt;&lt;strong&gt;PowerShell&lt;/strong&gt;:&lt;/dt&gt;
+&lt;dd&gt;render error code in Pycharm terminal&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;Now, I&amp;rsquo;m suspicious of Pycharm terminal. So I opened them independently (out of Pycharm) and run Uvicorn command.&lt;/p&gt;
+&lt;p&gt;bash.exe:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{shell}&#34; data-lang=&#34;{shell}&#34;&gt;$ uvicorn.exe sql_app.main:app
+[32mINFO[0m:     Started server process [[36m15060[0m]
+[32mINFO[0m:     Waiting for application startup.
+[32mINFO[0m:     Application startup complete.
+[32mINFO[0m:     Uvicorn running on [1mhttp://127.0.0.1:8000[0m (Press CTRL+C to quit)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;PowerShell:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{shell}&#34; data-lang=&#34;{shell}&#34;&gt;$ uvicorn.exe sql_app.main:app
+[32mINFO[0m:     Started server process [[36m13668[0m]
+[32mINFO[0m:     Waiting for application startup.
+[32mINFO[0m:     Application startup complete.
+[32mINFO[0m:     Uvicorn running on [1mhttp://127.0.0.1:8000[0m (Press CTRL+C to quit)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;Git-bash.exe&lt;/strong&gt; runs without error code however it&amp;rsquo;s just plain text without colors&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{shell}&#34; data-lang=&#34;{shell}&#34;&gt;$ uvicorn.exe sql_app.main:app
+INFO:     Started server process [12864]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;uvicorns-issue&#34;&gt;Uvicorn&amp;rsquo;s Issue&lt;/h3&gt;
+&lt;p&gt;After Googled for this kind of strange behavior, I found an &lt;a class=&#34;link&#34; href=&#34;https://github.com/tiangolo/fastapi/issues/815&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;issue opened on FastAPI page&lt;/a&gt; which is related to &lt;a class=&#34;link&#34; href=&#34;https://github.com/encode/uvicorn/pull/542&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;uvicorn&amp;rsquo;s bug&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;That bug seems caused by color escaping error on windows, and &lt;em&gt;euri10&lt;/em&gt; created a pull request which add &lt;code&gt;click.clear()&lt;/code&gt; on &lt;strong&gt;logging.py&lt;/strong&gt; to fix the bug. However, this line disappeared at official Uvicorn repository and the package I downloaded. Despite it actually &lt;em&gt;works&lt;/em&gt;, I think modify the package hardcode by myself is not an elegant solution.&lt;/p&gt;
+&lt;h2 id=&#34;ansi-escape-code&#34;&gt;ANSI Escape Code&lt;/h2&gt;
+&lt;p&gt;After spending a lot of time searching for that issue, I finally got some clues about it.&lt;/p&gt;
+&lt;p&gt;ANSI escape sequences are a standard for in-band signaling to control cursor location, color, font styling, and other options on video text terminals and &lt;strong&gt;terminal emulators&lt;/strong&gt;.
+&lt;code&gt;[32mINFO[0m:&lt;/code&gt; is equivalent to &lt;code&gt;\e[32mINFO\e[0m&lt;/code&gt; which will display &lt;span style=&#34;color: green;&#34;&gt;INFO&lt;/span&gt; on terminal. &lt;code&gt;\e&lt;/code&gt; means &lt;em&gt;escaping&lt;/em&gt;, &lt;code&gt;[32m&lt;/code&gt; means green foreground and &lt;code&gt;[0m&lt;/code&gt; reset the escape color code.&lt;/p&gt;
+&lt;h3 id=&#34;windows-terminalhttpsdocsmicrosoftcomzh-cnwindowsterminalget-started&#34;&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.microsoft.com/zh-cn/windows/terminal/get-started&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Windows Terminal&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Installed Windows terminal at Microsoft store, then I tried launching Uvicorn with windows terminal. To my surprise, &lt;strong&gt;both powershell and gitbash&lt;/strong&gt; rendered colorful Uvicorn&amp;rsquo;s starting log on terminal.&lt;/p&gt;
+&lt;p&gt;&lt;figure style=&#34;flex-grow: 368; flex-basis: 884px&#34;&gt;
+		&lt;a href=&#34;https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/Gitbash_uvicorn.png&#34; data-size=&#34;722x196&#34;&gt;&lt;img src=&#34;https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/Gitbash_uvicorn.png&#34;
+				srcset=&#34;https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/Gitbash_uvicorn_hud52419d6d550249d073264309dccc3e4_24068_480x0_resize_box_2.png 480w, https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/Gitbash_uvicorn_hud52419d6d550249d073264309dccc3e4_24068_1024x0_resize_box_2.png 1024w&#34;
+				width=&#34;722&#34;
+				height=&#34;196&#34;
+				loading=&#34;lazy&#34;
+				alt=&#34;run Uvicorn with git-bash.exe on windows terminal &#34;&gt;
+		&lt;/a&gt;
+		
+		&lt;figcaption&gt;run Uvicorn with git-bash.exe on windows terminal&lt;/figcaption&gt;
+		
+	&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&#34;strange-behavior&#34;&gt;Strange Behavior&lt;/h3&gt;
+&lt;p&gt;then I tried running &lt;code&gt;echo -e &amp;quot;\e[37;44;3;1mLYL\e[0m&amp;quot;&lt;/code&gt; on different terminal with different shell, this code expected white italic &amp;ldquo;LYL&amp;rdquo; text with blue background looks like: &lt;span style=&#34;color: white;font-style: italic; background: blue&#34;&gt;LYL&lt;span&gt;&lt;/p&gt;
+&lt;p&gt;On windows terminal platform print with correct format:
+&lt;figure style=&#34;flex-grow: 1174; flex-basis: 2818px&#34;&gt;
+		&lt;a href=&#34;https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/windows_terminal_gitbash.png&#34; data-size=&#34;728x62&#34;&gt;&lt;img src=&#34;https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/windows_terminal_gitbash.png&#34;
+				srcset=&#34;https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/windows_terminal_gitbash_hu9b02bfbabace5483a6895d7cdda2c428_3030_480x0_resize_box_2.png 480w, https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/windows_terminal_gitbash_hu9b02bfbabace5483a6895d7cdda2c428_3030_1024x0_resize_box_2.png 1024w&#34;
+				width=&#34;728&#34;
+				height=&#34;62&#34;
+				loading=&#34;lazy&#34;
+				alt=&#34;render escape code on windows terminal&#34;&gt;
+		&lt;/a&gt;
+		
+		&lt;figcaption&gt;render escape code on windows terminal&lt;/figcaption&gt;
+		
+	&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;but bash.exe can&amp;rsquo;t render italic text:
+&lt;figure style=&#34;flex-grow: 736; flex-basis: 1768px&#34;&gt;
+		&lt;a href=&#34;https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/bash_alone.png&#34; data-size=&#34;339x46&#34;&gt;&lt;img src=&#34;https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/bash_alone.png&#34;
+				srcset=&#34;https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/bash_alone_hubcf7dd4b31479c27d9b3b276f3467630_1133_480x0_resize_box_2.png 480w, https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/bash_alone_hubcf7dd4b31479c27d9b3b276f3467630_1133_1024x0_resize_box_2.png 1024w&#34;
+				width=&#34;339&#34;
+				height=&#34;46&#34;
+				loading=&#34;lazy&#34;
+				alt=&#34;bash.exe alone&#34;&gt;
+		&lt;/a&gt;
+		
+		&lt;figcaption&gt;bash.exe alone&lt;/figcaption&gt;
+		
+	&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;git-bash.exe have completely correct format, and run with &lt;code&gt;--use-colors&lt;/code&gt; parameter has colorful log output:
+&lt;figure style=&#34;flex-grow: 362; flex-basis: 870px&#34;&gt;
+		&lt;a href=&#34;https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/git-bash-use-color.png&#34; data-size=&#34;526x145&#34;&gt;&lt;img src=&#34;https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/git-bash-use-color.png&#34;
+				srcset=&#34;https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/git-bash-use-color_hu07c94afd42171bde551223936c7feafa_12147_480x0_resize_box_2.png 480w, https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/images/git-bash-use-color_hu07c94afd42171bde551223936c7feafa_12147_1024x0_resize_box_2.png 1024w&#34;
+				width=&#34;526&#34;
+				height=&#34;145&#34;
+				loading=&#34;lazy&#34;
+				alt=&#34;git-bash with parameter&#34;&gt;
+		&lt;/a&gt;
+		
+		&lt;figcaption&gt;git-bash with parameter&lt;/figcaption&gt;
+		
+	&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;And I tried setting Pycharm terminal&amp;rsquo;s shell as &lt;em&gt;git-bash.exe&lt;/em&gt; which will have wonderful formatted log, with only one drawback: a seperate window.&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Different terminals or terminal emulators have different behaviors, that makes me frustrating, I finally couldn&amp;rsquo;t find a perfect solution about this problem.&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.jetbrains.com/help/pycharm/terminal-emulator.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Pycharm integrated terminal &lt;/a&gt; as an embedded terminal emulator, it has it&amp;rsquo;s own exclusive manifestation. As a non-ANSI-aware terminal it has intrinsic flaw. VsCode might be a better solution?&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Axios With Typescript</title>
         <link>https://www.gagua.xyz/p/axios-with-typescript/</link>
         <pubDate>Sat, 17 Apr 2021 00:00:00 +0000</pubDate>
