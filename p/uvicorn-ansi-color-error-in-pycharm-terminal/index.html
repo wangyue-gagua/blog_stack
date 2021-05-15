@@ -1,23 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-us">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Origin Recently I&amp;rsquo;m learning FastAPI wanting to develop a JSON API based backend server which using Uvicorn as ASGI server. Previously I usually used VSCode to writing python script, but this time I&amp;rsquo;d like to build a slightly bigger project so I turned to Pycharm to build FastAPI application.
-Uvicorn Uvicorn is a lightning-fast ASGI server implementation, using uvloop and httptools.
-ERROR When I ran FastAPI application with uvicorn.exe sql_app.main:app I got into a weird trouble:'><title>Uvicorn ANSI Color Error In Pycharm Terminal</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='entangled with Uvicorn ANSI escape color display error on Pycharm'><title>Uvicorn ANSI Color Error In Pycharm Terminal</title>
 
 <link rel='canonical' href='https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/'>
 
 <link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Uvicorn ANSI Color Error In Pycharm Terminal'>
-<meta property='og:description' content='Origin Recently I&amp;rsquo;m learning FastAPI wanting to develop a JSON API based backend server which using Uvicorn as ASGI server. Previously I usually used VSCode to writing python script, but this time I&amp;rsquo;d like to build a slightly bigger project so I turned to Pycharm to build FastAPI application.
-Uvicorn Uvicorn is a lightning-fast ASGI server implementation, using uvloop and httptools.
-ERROR When I ran FastAPI application with uvicorn.exe sql_app.main:app I got into a weird trouble:'>
+<meta property='og:description' content='entangled with Uvicorn ANSI escape color display error on Pycharm'>
 <meta property='og:url' content='https://www.gagua.xyz/p/uvicorn-ansi-color-error-in-pycharm-terminal/'>
 <meta property='og:site_name' content='A Technical Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='python' /><meta property='article:published_time' content='2021-05-11T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-05-11T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="Uvicorn ANSI Color Error In Pycharm Terminal">
-<meta name="twitter:description" content="Origin Recently I&amp;rsquo;m learning FastAPI wanting to develop a JSON API based backend server which using Uvicorn as ASGI server. Previously I usually used VSCode to writing python script, but this time I&amp;rsquo;d like to build a slightly bigger project so I turned to Pycharm to build FastAPI application.
-Uvicorn Uvicorn is a lightning-fast ASGI server implementation, using uvloop and httptools.
-ERROR When I ran FastAPI application with uvicorn.exe sql_app.main:app I got into a weird trouble:">
+<meta name="twitter:description" content="entangled with Uvicorn ANSI escape color display error on Pycharm">
     <link rel="shortcut icon" href="img/favicon.ico" />
 
 <script type="application/javascript">
@@ -218,6 +212,10 @@ if (!doNotTrack) {
         <a href="/p/uvicorn-ansi-color-error-in-pycharm-terminal/">Uvicorn ANSI Color Error In Pycharm Terminal</a>
     </h2>
 
+    
+    <h3 class="article-subtitle">
+        entangled with Uvicorn ANSI escape color display error on Pycharm
+    </h3>
     <footer class="article-time">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
@@ -243,16 +241,16 @@ so I turned to <a class="link" href="https://www.jetbrains.com/zh-cn/pycharm/"  
     >Uvicorn</a> is a lightning-fast ASGI server implementation, using uvloop and httptools.</p>
 <h3 id="error">ERROR</h3>
 <p>When I ran FastAPI application with <code>uvicorn.exe sql_app.main:app</code> I got into a weird trouble:</p>
-<pre><code class="language-{shell}" data-lang="{shell}">$ uvicorn.exe sql_app.main:app
-?[32mINFO?[0m:     Started server process [?[36m15204?[0m]
-?[32mINFO?[0m:     Waiting for application startup.
-?[32mINFO?[0m:     Application startup complete.
-?[32mINFO?[0m:     Uvicorn running on ?[1mhttp://127.0.0.1:8000?[0m (Press CTRL+C to quit)
-?[32mINFO?[0m:     Shutting down
-?[32mINFO?[0m:     Waiting for application shutdown.
-?[32mINFO?[0m:     Application shutdown complete.
-?[32mINFO?[0m:     Finished server process [?[36m15204?[0m]
-</code></pre><p>There are some unexpected code in Uvicorn starting log. Then I opened the same folder with VScode, the
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ uvicorn.exe sql_app.main:app
+?<span class="o">[</span>32mINFO?<span class="o">[</span>0m:     Started server process <span class="o">[</span>?<span class="o">[</span>36m15204?<span class="o">[</span>0m<span class="o">]</span>
+?<span class="o">[</span>32mINFO?<span class="o">[</span>0m:     Waiting <span class="k">for</span> application startup.
+?<span class="o">[</span>32mINFO?<span class="o">[</span>0m:     Application startup complete.
+?<span class="o">[</span>32mINFO?<span class="o">[</span>0m:     Uvicorn running on ?<span class="o">[</span>1mhttp://127.0.0.1:8000?<span class="o">[</span>0m <span class="o">(</span>Press CTRL+C to quit<span class="o">)</span>
+?<span class="o">[</span>32mINFO?<span class="o">[</span>0m:     Shutting down
+?<span class="o">[</span>32mINFO?<span class="o">[</span>0m:     Waiting <span class="k">for</span> application shutdown.
+?<span class="o">[</span>32mINFO?<span class="o">[</span>0m:     Application shutdown complete.
+?<span class="o">[</span>32mINFO?<span class="o">[</span>0m:     Finished server process <span class="o">[</span>?<span class="o">[</span>36m15204?<span class="o">[</span>0m<span class="o">]</span>
+</code></pre></div><p>There are some unexpected code in Uvicorn starting log. Then I opened the same folder with VScode, the
 results looks like:</p>
 <blockquote>
 <p><span style="color: green;">INFO:</span>   Started server process [<span style="color: Cyan;">5536</span>]</p>
@@ -270,24 +268,24 @@ results looks like:</p>
 </dl>
 <p>Now, I&rsquo;m suspicious of Pycharm terminal. So I opened them independently (out of Pycharm) and run Uvicorn command.</p>
 <p>bash.exe:</p>
-<pre><code class="language-{shell}" data-lang="{shell}">$ uvicorn.exe sql_app.main:app
-[32mINFO[0m:     Started server process [[36m15060[0m]
-[32mINFO[0m:     Waiting for application startup.
-[32mINFO[0m:     Application startup complete.
-[32mINFO[0m:     Uvicorn running on [1mhttp://127.0.0.1:8000[0m (Press CTRL+C to quit)
-</code></pre><p>PowerShell:</p>
-<pre><code class="language-{shell}" data-lang="{shell}">$ uvicorn.exe sql_app.main:app
-[32mINFO[0m:     Started server process [[36m13668[0m]
-[32mINFO[0m:     Waiting for application startup.
-[32mINFO[0m:     Application startup complete.
-[32mINFO[0m:     Uvicorn running on [1mhttp://127.0.0.1:8000[0m (Press CTRL+C to quit)
-</code></pre><p><strong>Git-bash.exe</strong> runs without error code however it&rsquo;s just plain text without colors</p>
-<pre><code class="language-{shell}" data-lang="{shell}">$ uvicorn.exe sql_app.main:app
-INFO:     Started server process [12864]
-INFO:     Waiting for application startup.
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ uvicorn.exe sql_app.main:app
+<span class="o">[</span>32mINFO<span class="o">[</span>0m:     Started server process <span class="o">[[</span>36m15060<span class="o">[</span>0m<span class="o">]</span>
+<span class="o">[</span>32mINFO<span class="o">[</span>0m:     Waiting <span class="k">for</span> application startup.
+<span class="o">[</span>32mINFO<span class="o">[</span>0m:     Application startup complete.
+<span class="o">[</span>32mINFO<span class="o">[</span>0m:     Uvicorn running on <span class="o">[</span>1mhttp://127.0.0.1:8000<span class="o">[</span>0m <span class="o">(</span>Press CTRL+C to quit<span class="o">)</span>
+</code></pre></div><p>PowerShell:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ uvicorn.exe sql_app.main:app
+<span class="o">[</span>32mINFO<span class="o">[</span>0m:     Started server process <span class="o">[[</span>36m13668<span class="o">[</span>0m<span class="o">]</span>
+<span class="o">[</span>32mINFO<span class="o">[</span>0m:     Waiting <span class="k">for</span> application startup.
+<span class="o">[</span>32mINFO<span class="o">[</span>0m:     Application startup complete.
+<span class="o">[</span>32mINFO<span class="o">[</span>0m:     Uvicorn running on <span class="o">[</span>1mhttp://127.0.0.1:8000<span class="o">[</span>0m <span class="o">(</span>Press CTRL+C to quit<span class="o">)</span>
+</code></pre></div><p><strong>Git-bash.exe</strong> runs without error code however it&rsquo;s just plain text without colors</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ uvicorn.exe sql_app.main:app
+INFO:     Started server process <span class="o">[</span>12864<span class="o">]</span>
+INFO:     Waiting <span class="k">for</span> application startup.
 INFO:     Application startup complete.
-INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-</code></pre><h3 id="uvicorns-issue">Uvicorn&rsquo;s Issue</h3>
+INFO:     Uvicorn running on http://127.0.0.1:8000 <span class="o">(</span>Press CTRL+C to quit<span class="o">)</span>
+</code></pre></div><h3 id="uvicorns-issue">Uvicorn&rsquo;s Issue</h3>
 <p>After Googled for this kind of strange behavior, I found an <a class="link" href="https://github.com/tiangolo/fastapi/issues/815"  target="_blank" rel="noopener"
     >issue opened on FastAPI page</a> which is related to <a class="link" href="https://github.com/encode/uvicorn/pull/542"  target="_blank" rel="noopener"
     >uvicorn&rsquo;s bug</a>.</p>
@@ -295,7 +293,7 @@ INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 <h2 id="ansi-escape-code">ANSI Escape Code</h2>
 <p>After spending a lot of time searching for that issue, I finally got some clues about it.</p>
 <p>ANSI escape sequences are a standard for in-band signaling to control cursor location, color, font styling, and other options on video text terminals and <strong>terminal emulators</strong>.
-<code>[32mINFO[0m:</code> is equivalent to <code>\e[32mINFO\e[0m</code> which will display <span style="color: green;">INFO</span> on terminal. <code>\e</code> means <em>escaping</em>, <code>[32m</code> means green foreground and <code>[0m</code> reset the escape color code.</p>
+<code>[32mINFO[0m:</code> is equivalent to <code>\e[32mINFO\e[0m</code> which will display <span style="color: green;">INFO</span> on terminal. <code>\e</code> means <em>escaping</em>, <code>[32m</code> means green foreground and <code>[0m</code> reset the escape color code.</p>
 <h3 id="windows-terminalhttpsdocsmicrosoftcomzh-cnwindowsterminalget-started"><a class="link" href="https://docs.microsoft.com/zh-cn/windows/terminal/get-started"  target="_blank" rel="noopener"
     >Windows Terminal</a></h3>
 <p>Installed Windows terminal at Microsoft store, then I tried launching Uvicorn with windows terminal. To my surprise, <strong>both powershell and gitbash</strong> rendered colorful Uvicorn&rsquo;s starting log on terminal.</p>
