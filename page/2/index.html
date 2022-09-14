@@ -26,6 +26,109 @@ if (!doNotTrack) {
 </script>
 <script async src='https://www.google-analytics.com/analytics.js'></script>
 
+<style>
+    .mainKokoro {
+        width: 20px;
+        position: fixed;
+    }
+
+    .disc1Kokoro {
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+         
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+    }
+
+    .disc2Kokoro {
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+         
+        position: absolute;
+        top: 0;
+        right: -14px;
+        z-index: 2;
+    }
+
+    .squareKokoro {
+        width: 20px;
+        height: 20px;
+         
+        transform: rotateZ(45deg);
+        position: absolute;
+        top: 7px;
+        left: 7px;
+        z-index: 1;
+    }
+
+    .bg-red {
+        background-color: #e54d42;
+    }
+    .bg-orange {
+        background-color: #f37b1d;
+    }
+    .bg-yellow {
+        background-color: #fbbd08;
+    }
+    .bg-olive {
+        background-color: #8dc63f;
+    }
+    .bg-green {
+        background-color: #39b54a;
+    }
+    .bg-cyan {
+        background-color: #1cbbb4;
+    }
+    .bg-blue {
+        background-color: #0081ff;
+    }
+    .bg-purple {
+        background-color: #6739b6;
+    }
+    .bg-mauve {
+        background-color: #9c26b0;
+    }
+    .bg-pink {
+        background-color: #e03997;
+    }
+    .bg-brown {
+        background-color: #a5673f;
+    }
+    .bg-grey {
+        background-color: #8799a3;
+    }
+    .bg-gray {
+        background-color: #f0f0f0;
+    }
+    .bg-black {
+        background-color: #333;
+    }
+    .bg-white {
+        background-color: #fff;
+    }
+    .bg-gradual-red {
+        background-image: linear-gradient(45deg, #f43f3b, #ec008c);
+    }
+    .bg-gradual-orange {
+        background-image: linear-gradient(45deg, #ff9700, #ed1c24);
+    }
+    .bg-gradual-green {
+        background-image: linear-gradient(45deg, #39b54a, #8dc63f);
+    }
+    .bg-gradual-purple {
+        background-image: linear-gradient(45deg, #9000ff, #5e00ff);
+    }
+    .bg-gradual-pink {
+        background-image: linear-gradient(45deg, #ec008c, #6739b6);
+    }
+    .bg-gradual-blue {
+        background-image: linear-gradient(45deg, #0081ff, #1cbbb4);
+    }
+</style>
     </head>
     <body class="">
     <script>
@@ -408,7 +511,7 @@ if (!doNotTrack) {
         
             2020 - 
         
-        2021 A Technical Blog
+        2022 A Technical Blog
     </section>
     
     <section class="powerby">
@@ -442,6 +545,87 @@ if (!doNotTrack) {
         document.head.appendChild(customFont);
     }());
 </script>
+<script>
+    const color = [
+        "bg-red",
+        "bg-orange",
+        "bg-yellow",
+        "bg-olive",
+        "bg-green",
+        "bg-cyan",
+        "bg-blue",
+        "bg-purple",
+        "bg-mauve",
+        "bg-pink",
+        "bg-brown",
+        "bg-grey",
+        "bg-gray",
+        "bg-black",
+        "bg-white",
+        "bg-gradual-red",
+        "bg-gradual-orange",
+        "bg-gradual-green",
+        "bg-gradual-purple",
+        "bg-gradual-pink",
+        "bg-gradual-blue",
+    ];
+    
 
+    let addElement = function (top, left) {
+        
+        let main = document.querySelectorAll(".mainKokoro");
+        if (main.length > 0) {
+            main.forEach((item) => {
+                item.remove();
+            });
+        }
+
+        const randomCount = Math.random();
+        let bg =
+            color[Math.floor(randomCount * (color.length - 1 + 1) + 1)];
+        let bodyElement = document.querySelector("body");
+        bodyElement.innerHTML +=
+            `<div class="mainKokoro" style="top: ` +
+            (top - 15) +
+            `px; left: ` +
+            (left - 15) +
+            `px;">
+        <div class="disc1Kokoro ` +
+            bg +
+            `"></div>
+        <div class="disc2Kokoro ` +
+            bg +
+            `"></div>
+        <div class="squareKokoro ` +
+            bg +
+            `"></div>
+    </div>`;
+        const animDuration = 500;
+        let mainElement = document.querySelector(".mainKokoro");
+        let mainAnimation = mainElement.animate(
+            [
+                { opacity: 0, transform: "translateY(0px)" },
+                { opacity: 1, transform: "translateY(-15px)" },
+                { opacity: 0.5, transform: "translateY(-30px)" },
+            ],
+            {
+                
+                duration: animDuration,
+                iterations: 1,
+            }
+        );
+        mainAnimation.onfinish = () => {
+            mainElement.remove();
+            
+        };
+    };
+
+    window.onload = function () {
+        window.addEventListener("click", function (e) {
+            addElement(e.pageY, e.pageX);
+            
+        });
+    };
+</script>
     </body>
 </html>
